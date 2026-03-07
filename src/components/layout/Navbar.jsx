@@ -10,7 +10,8 @@ function Navbar({ role = 'investor' }) {
 
   const handleLogout = () => {
     localStorage.removeItem('authToken')
-    navigate('/login')
+    localStorage.removeItem('userRole')
+    navigate(role === 'admin' ? '/' : '/')
   }
 
   const investorLinks = [
