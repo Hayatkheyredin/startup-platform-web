@@ -1,11 +1,8 @@
 /**
- * LoginPage - Authentication page for investors and admins.
- * Inspired by inspo design: split layout - dark left panel with form, image on right.
- * Fields: Email, Password. Buttons: Login, Forgot Password.
+ * LoginPage - Authentication for investors and admins.
  */
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Form, Button, Alert } from 'react-bootstrap'
 import { login, forgotPassword } from '../services/api'
 
 function LoginPage() {
@@ -28,7 +25,6 @@ function LoginPage() {
       const redirect = res.role === 'admin' ? '/admin/users' : '/investor'
       navigate(redirect)
     } catch (err) {
-      // Demo mode: when API is unavailable, allow login with any credentials
       const isAdmin = email.toLowerCase().includes('admin')
       localStorage.setItem('authToken', 'demo-token')
       localStorage.setItem('userRole', isAdmin ? 'admin' : 'investor')
@@ -53,128 +49,121 @@ function LoginPage() {
   }
 
   return (
-    <div className="min-vh-100 d-flex">
-      {/* Left panel - dark charcoal with form (inspo design) */}
-      <div className="section-dark d-flex align-items-center justify-content-center p-5 flex-grow-1" style={{ minWidth: 0 }}>
-        <div className="w-100" style={{ maxWidth: 400 }}>
-          <div className="mb-4">
-            <div
-              className="rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
-              style={{ width: 56, height: 56, backgroundColor: 'var(--color-accent)' }}
-            >
-              <span className="text-white fw-bold">WSP</span>
+    <div className="min-h-screen flex flex-col md:flex-row">
+      {/* Left panel - form */}
+      <div className="flex-1 flex items-center justify-center p-6 md:p-10 bg-gradient-to-br from-primary via-primary to-primary-hover">
+        <div className="w-full max-w-md">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center text-white font-bold text-lg">
+              WSP
             </div>
-            <h1 className="h3 fw-bold text-white mb-2">
-              Women Startup Platform
-            </h1>
-            <p className="text-white-50 small">
-              Sign in to access the investor or admin dashboard.
-            </p>
+            <div>
+              <h1 className="text-xl font-semibold text-white">Women Startup Platform</h1>
+              <p className="text-sm text-white/80">Sign in to your account</p>
+            </div>
           </div>
 
-          <hr className="border-secondary mb-4" />
-
-          {error && <Alert variant="danger" className="small">{error}</Alert>}
+          {error && (
+            <div className="mb-4 p-3 rounded-lg bg-red-500/20 text-red-200 text-sm">
+              {error}
+            </div>
+          )}
           {forgotSuccess && (
-            <Alert variant="success" className="small">
+            <div className="mb-4 p-3 rounded-lg bg-secondary/20 text-white text-sm">
               Password reset email sent. Check your inbox.
-            </Alert>
+            </div>
           )}
 
           {forgotMode ? (
-            <Form onSubmit={handleForgotPassword}>
-              <Form.Group className="mb-3">
-                <Form.Label className="text-white">Email</Form.Label>
-                <Form.Control
+            <form onSubmit={handleForgotPassword} className="space-y-4">
+              <div>
+                <label htmlFor="forgot-email" className="block text-sm font-medium text-white/90 mb-1.5">
+                  Email
+                </label>
+                <input
+                  id="forgot-email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="bg-dark border-secondary text-white"
+                  className="w-full px-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
                 />
-              </Form.Group>
-              <Button
+              </div>
+              <button
                 type="submit"
-                className="btn btn-primary-custom w-100 rounded-0 mb-2"
                 disabled={loading}
+                className="w-full py-2.5 px-4 rounded-lg bg-accent text-white font-medium hover:bg-accent-hover transition-smooth disabled:opacity-60"
               >
                 {loading ? 'Sending...' : 'Send Reset Link'}
-              </Button>
-              <Button
-                variant="link"
-                className="text-accent p-0"
+              </button>
+              <button
+                type="button"
                 onClick={() => setForgotMode(false)}
+                className="text-sm text-white/80 hover:text-white transition-smooth"
               >
-                Back to Login
-              </Button>
-            </Form>
+                ← Back to Login
+              </button>
+            </form>
           ) : (
-            <Form onSubmit={handleLogin}>
-              <Form.Group className="mb-3">
-                <Form.Label className="text-white">Email</Form.Label>
-                <Form.Control
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label htmlFor="login-email" className="block text-sm font-medium text-white/90 mb-1.5">
+                  Email
+                </label>
+                <input
+                  id="login-email"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="bg-dark border-secondary text-white"
+                  className="w-full px-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
                 />
-              </Form.Group>
-              <Form.Group className="mb-4">
-                <Form.Label className="text-white">Password</Form.Label>
-                <Form.Control
+              </div>
+              <div>
+                <label htmlFor="login-password" className="block text-sm font-medium text-white/90 mb-1.5">
+                  Password
+                </label>
+                <input
+                  id="login-password"
                   type="password"
-                  placeholder="Enter your password"
+                  placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="bg-dark border-secondary text-white"
+                  className="w-full px-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-smooth"
                 />
-              </Form.Group>
-              <Button
+              </div>
+              <button
                 type="submit"
-                className="btn btn-primary-custom w-100 rounded-0 mb-2"
                 disabled={loading}
+                className="w-full py-2.5 px-4 rounded-lg bg-accent text-white font-medium hover:bg-accent-hover transition-smooth disabled:opacity-60"
               >
                 {loading ? 'Logging in...' : 'Login'}
-              </Button>
-              <Button
-                variant="link"
-                className="text-accent p-0"
+              </button>
+              <button
+                type="button"
                 onClick={() => setForgotMode(true)}
+                className="text-sm text-white/80 hover:text-white transition-smooth"
               >
                 Forgot Password?
-              </Button>
-            </Form>
+              </button>
+            </form>
           )}
-
-          <hr className="border-secondary mt-4" />
         </div>
       </div>
 
-      {/* Right panel - image (inspo design) */}
-      <div className="d-none d-md-flex align-items-center justify-content-center p-0 bg-light" style={{ width: '50%' }}>
-        <div
-          className="w-100 h-100"
-          style={{
-            backgroundImage: 'linear-gradient(135deg, #f5e6df 0%, #e9ecef 50%, #dee2e6 100%)',
-            minHeight: '100vh',
-          }}
-        >
-          <div className="d-flex align-items-center justify-content-center h-100 p-5">
-            <div className="text-center">
-              <div
-                className="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
-                style={{ width: 120, height: 120, backgroundColor: 'var(--color-accent)' }}
-              >
-                <span className="text-white display-4">🚀</span>
-              </div>
-              <h3 className="text-charcoal fw-semibold">Empowering Women Founders</h3>
-              <p className="text-muted">Connect with validated startups and make an impact.</p>
-            </div>
+      {/* Right panel - branding */}
+      <div className="hidden md:flex flex-1 items-center justify-center p-12 bg-surface">
+        <div className="text-center max-w-sm">
+          <div className="w-24 h-24 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+            <svg className="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
           </div>
+          <h2 className="text-xl font-semibold text-text mb-2">Empowering Women Founders</h2>
+          <p className="text-text-muted text-sm">Connect with validated startups and make an impact.</p>
         </div>
       </div>
     </div>

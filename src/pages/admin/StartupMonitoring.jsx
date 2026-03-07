@@ -2,13 +2,11 @@
  * StartupMonitoring - Admin page to list startups and track status.
  */
 import React, { useState, useEffect } from 'react'
-import { Table, Spinner, Alert, Badge, Form } from 'react-bootstrap'
 import { getStartupsForAdmin } from '../../services/api'
 
 function StartupMonitoring() {
   const [startups, setStartups] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
 
   useEffect(() => {
@@ -17,7 +15,6 @@ function StartupMonitoring() {
         const data = await getStartupsForAdmin()
         setStartups(data.startups || data || [])
       } catch (err) {
-        setError(err.message || 'Failed to load startups')
         setStartups([])
       } finally {
         setLoading(false)
@@ -39,59 +36,66 @@ function StartupMonitoring() {
     : displayStartups
 
   const getStatusBadge = (status) => {
-    const variants = { validated: 'success', pending: 'warning', rejected: 'danger' }
-    return <Badge bg={variants[status] || 'secondary'}>{status}</Badge>
+    const styles = {
+      validated: 'bg-success/20 text-success',
+      pending: 'bg-amber-100 text-amber-800',
+      rejected: 'bg-red-100 text-red-700',
+    }
+    return (
+      <span className={`px-2 py-0.5 rounded-md text-xs font-medium ${styles[status] || 'bg-slate-100 text-text-muted'}`}>
+        {status}
+      </span>
+    )
   }
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-          <h1 className="h3 fw-bold text-charcoal">Startup Monitoring</h1>
-          <p className="text-muted mb-0">Track startup status</p>
+          <h1 className="text-2xl font-semibold text-text">Startup Monitoring</h1>
+          <p className="text-text-muted text-sm mt-0.5">Track startup status</p>
         </div>
-        <Form.Select
-          size="sm"
-          style={{ width: 160 }}
+        <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
+          className="w-full sm:w-40 px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
         >
           <option value="">All Status</option>
           <option value="validated">Validated</option>
           <option value="pending">Pending</option>
           <option value="rejected">Rejected</option>
-        </Form.Select>
+        </select>
       </div>
 
-      {error && <Alert variant="warning">Using demo data. {error}</Alert>}
-
       {loading ? (
-        <div className="text-center py-5">
-          <Spinner animation="border" style={{ color: 'var(--color-accent)' }} />
+        <div className="flex flex-col items-center justify-center py-16">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : (
-        <Table responsive bordered hover>
-          <thead style={{ backgroundColor: 'var(--color-charcoal)', color: 'white' }}>
-            <tr>
-              <th>Name</th>
-              <th>Industry</th>
-              <th>Status</th>
-              <th>Submitted</th>
-              <th>Founder</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((startup) => (
-              <tr key={startup.id}>
-                <td>{startup.name}</td>
-                <td>{startup.industry}</td>
-                <td>{getStatusBadge(startup.status)}</td>
-                <td>{startup.submittedAt || 'N/A'}</td>
-                <td>{startup.founderEmail || 'N/A'}</td>
+        <div className="bg-white rounded-card shadow-card border border-slate-100 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-primary text-white">
+              <tr>
+                <th className="text-left px-4 py-3 font-medium">Name</th>
+                <th className="text-left px-4 py-3 font-medium">Industry</th>
+                <th className="text-left px-4 py-3 font-medium">Status</th>
+                <th className="text-left px-4 py-3 font-medium">Submitted</th>
+                <th className="text-left px-4 py-3 font-medium">Founder</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {filtered.map((startup) => (
+                <tr key={startup.id} className="border-t border-slate-100 hover:bg-slate-50/50">
+                  <td className="px-4 py-3 font-medium text-text">{startup.name}</td>
+                  <td className="px-4 py-3 text-text-muted">{startup.industry}</td>
+                  <td className="px-4 py-3">{getStatusBadge(startup.status)}</td>
+                  <td className="px-4 py-3 text-text-muted">{startup.submittedAt || 'N/A'}</td>
+                  <td className="px-4 py-3 text-text-muted">{startup.founderEmail || 'N/A'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   )

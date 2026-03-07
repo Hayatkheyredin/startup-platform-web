@@ -1,97 +1,14 @@
-/**
- * Global styles - Women Startup Platform
- * Design: Clean, minimalist - white, dark charcoal grey, orange/peach accent
- * Based on inspo design
- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  /* Primary palette */
-  --color-white: #ffffff;
-  --color-bg-light: #f8f9fa;
-  --color-charcoal: #2c2c2c;
-  --color-charcoal-dark: #1a1a1a;
-  --color-grey: #6c757d;
-  --color-grey-light: #e9ecef;
-  
-  /* Accent - orange/peach from inspo */
-  --color-accent: #e07c4c;
-  --color-accent-hover: #d4693a;
-  --color-accent-light: #f5e6df;
-  
-  /* Typography */
-  --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  
-  /* Spacing */
-  --navbar-height: 64px;
-  --sidebar-width: 260px;
+@layer base {
+  body {
+    @apply bg-surface text-text font-sans antialiased;
+  }
 }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: var(--font-sans);
-  background-color: var(--color-white);
-  color: var(--color-charcoal);
-  line-height: 1.5;
-}
-
-/* Primary button - orange accent */
-.btn-primary-custom {
-  background-color: var(--color-accent);
-  border-color: var(--color-accent);
-  color: white;
-}
-
-.btn-primary-custom:hover {
-  background-color: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
-  color: white;
-}
-
-/* Secondary button - grey */
-.btn-secondary-custom {
-  background-color: var(--color-grey-light);
-  border-color: var(--color-grey-light);
-  color: var(--color-charcoal);
-}
-
-.btn-secondary-custom:hover {
-  background-color: #dee2e6;
-  border-color: #dee2e6;
-  color: var(--color-charcoal);
-}
-
-/* Dark section backgrounds */
-.section-dark {
-  background-color: var(--color-charcoal);
-  color: white;
-}
-
-/* Card styling */
-.card-custom {
-  border: 1px solid var(--color-grey-light);
-  border-radius: 8px;
-  transition: box-shadow 0.2s ease;
-}
-
-.card-custom:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* Form inputs */
-.form-control-custom:focus {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 0.2rem rgba(224, 124, 76, 0.25);
-}
-
-/* Link accent color */
-a.text-accent {
-  color: var(--color-accent);
-}
-
-a.text-accent:hover {
-  color: var(--color-accent-hover);
+/* Custom utility for card hover transition */
+.transition-smooth {
+  @apply transition-all duration-200 ease-out;
 }

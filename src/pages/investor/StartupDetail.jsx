@@ -3,17 +3,14 @@
  */
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Row, Col, Card, Button, Spinner, Alert, Badge, ListGroup } from 'react-bootstrap'
 import { getStartupById, addToInterests, recordInvestment } from '../../services/api'
 import Modal from '../../components/ui/Modal'
-import.meta.env.VITE_API_URL
 
 function StartupDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [startup, setStartup] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
   const [showInvestModal, setShowInvestModal] = useState(false)
   const [investAmount, setInvestAmount] = useState('')
 
@@ -23,7 +20,6 @@ function StartupDetail() {
         const data = await getStartupById(id)
         setStartup(data)
       } catch (err) {
-        setError(err.message || 'Failed to load startup')
         setStartup(null)
       } finally {
         setLoading(false)
@@ -32,7 +28,6 @@ function StartupDetail() {
     fetchData()
   }, [id])
 
-  // Mock data when API fails
   const mockStartup = {
     id,
     name: 'TechFlow Solutions',
@@ -75,125 +70,137 @@ function StartupDetail() {
 
   if (loading) {
     return (
-      <div className="text-center py-5">
-        <Spinner animation="border" style={{ color: 'var(--color-accent)' }} />
+      <div className="flex flex-col items-center justify-center py-16">
+        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
 
   return (
     <div>
-      <Button variant="link" className="text-accent mb-3 p-0" onClick={() => navigate(-1)}>
+      <button
+        type="button"
+        onClick={() => navigate(-1)}
+        className="text-sm text-primary font-medium hover:underline mb-4"
+      >
         ← Back
-      </Button>
+      </button>
 
-      {error && <Alert variant="warning">Using demo data. {error}</Alert>}
-
-      {/* Hero section - dark panel with key info */}
-      <div className="section-dark rounded p-4 mb-4">
-        <Row>
-          <Col md={8}>
-            <h1 className="h3 fw-bold text-white mb-2">{displayStartup.name}</h1>
-            <div className="d-flex gap-2 mb-2">
-              <Badge bg="secondary">{displayStartup.industry}</Badge>
-              <Badge style={{ backgroundColor: 'var(--color-accent)' }}>{displayStartup.stage}</Badge>
+      <div className="bg-gradient-to-r from-primary to-secondary rounded-card p-6 mb-6 text-white">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <h1 className="text-xl font-semibold mb-2">{displayStartup.name}</h1>
+            <div className="flex flex-wrap gap-2 mb-3">
+              <span className="px-2 py-0.5 rounded-md text-xs font-medium bg-white/20">
+                {displayStartup.industry}
+              </span>
+              <span className="px-2 py-0.5 rounded-md text-xs font-medium bg-accent text-white">
+                {displayStartup.stage}
+              </span>
             </div>
-            <p className="text-white-50 mb-3">{displayStartup.description}</p>
-            <p className="text-white mb-0">
-              <strong>Funding needed:</strong> {displayStartup.fundingNeeded}
+            <p className="text-white/90 text-sm mb-2">{displayStartup.description}</p>
+            <p className="text-sm">
+              <span className="font-medium">Funding needed:</span> {displayStartup.fundingNeeded}
             </p>
-          </Col>
-          <Col md={4} className="d-flex flex-column gap-2 justify-content-end">
-            <Button className="btn btn-primary-custom rounded-0" onClick={handleAddToInterests}>
+          </div>
+          <div className="flex flex-col gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={handleAddToInterests}
+              className="px-4 py-2 rounded-btn font-medium bg-accent text-white hover:bg-accent-hover transition-smooth"
+            >
               Add to Interests
-            </Button>
-            <Button variant="outline-light" className="rounded-0" onClick={() => setShowInvestModal(true)}>
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowInvestModal(true)}
+              className="px-4 py-2 rounded-btn font-medium bg-white/20 border border-white/40 text-white hover:bg-white/30 transition-smooth"
+            >
               Record Investment
-            </Button>
-          </Col>
-        </Row>
+            </button>
+          </div>
+        </div>
       </div>
 
-      <Row>
-        {/* Team Members */}
-        <Col md={6} className="mb-4">
-          <Card className="card-custom h-100">
-            <Card.Header style={{ backgroundColor: 'var(--color-charcoal)', color: 'white' }}>
-              Team Members
-            </Card.Header>
-            <Card.Body>
-              <ListGroup variant="flush">
-                {(displayStartup.teamMembers || []).map((member, i) => (
-                  <ListGroup.Item key={i}>
-                    <strong>{member.name}</strong> — {member.role}
-                    <br />
-                    <small className="text-muted">{member.email}</small>
-                  </ListGroup.Item>
-                ))}
-              </ListGroup>
-            </Card.Body>
-          </Card>
-        </Col>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="bg-white rounded-card shadow-card border border-slate-100 overflow-hidden">
+          <div className="px-4 py-3 border-b border-slate-100 bg-slate-50/50">
+            <h2 className="font-semibold text-text">Team Members</h2>
+          </div>
+          <ul className="divide-y divide-slate-100">
+            {(displayStartup.teamMembers || []).map((member, i) => (
+              <li key={i} className="px-4 py-3">
+                <p className="font-medium text-text">{member.name}</p>
+                <p className="text-sm text-text-muted">{member.role}</p>
+                <p className="text-xs text-text-muted">{member.email}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        {/* AI Validation Report */}
-        <Col md={6} className="mb-4">
-          <Card className="card-custom h-100">
-            <Card.Header style={{ backgroundColor: 'var(--color-charcoal)', color: 'white' }}>
-              AI Validation Report
-            </Card.Header>
-            <Card.Body>
-              {displayStartup.aiValidationReport ? (
-                <>
-                  <div className="mb-3">
-                    <span className="badge" style={{ backgroundColor: 'var(--color-accent)', fontSize: '1rem' }}>
-                      Score: {displayStartup.aiValidationReport.score}/100
-                    </span>
-                  </div>
-                  <p className="small">{displayStartup.aiValidationReport.summary}</p>
-                  <p className="small mb-1"><strong>Risks:</strong></p>
-                  <ul className="small">
-                    {(displayStartup.aiValidationReport.risks || []).map((r, i) => (
-                      <li key={i}>{r}</li>
-                    ))}
-                  </ul>
-                  <p className="small mb-1"><strong>Recommendations:</strong></p>
-                  <ul className="small">
-                    {(displayStartup.aiValidationReport.recommendations || []).map((r, i) => (
-                      <li key={i}>{r}</li>
-                    ))}
-                  </ul>
-                </>
-              ) : (
-                <p className="text-muted small">No validation report available.</p>
-              )}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+        <div className="bg-white rounded-card shadow-card border border-slate-100 overflow-hidden">
+          <div className="px-4 py-3 border-b border-slate-100 bg-slate-50/50">
+            <h2 className="font-semibold text-text">AI Validation Report</h2>
+          </div>
+          <div className="p-4">
+            {displayStartup.aiValidationReport ? (
+              <>
+                <div className="mb-3">
+                  <span className="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-accent/20 text-accent">
+                    Score: {displayStartup.aiValidationReport.score}/100
+                  </span>
+                </div>
+                <p className="text-sm text-text-muted mb-3">{displayStartup.aiValidationReport.summary}</p>
+                <p className="text-sm font-medium text-text mb-1">Risks</p>
+                <ul className="text-sm text-text-muted list-disc list-inside mb-3">
+                  {(displayStartup.aiValidationReport.risks || []).map((r, i) => (
+                    <li key={i}>{r}</li>
+                  ))}
+                </ul>
+                <p className="text-sm font-medium text-text mb-1">Recommendations</p>
+                <ul className="text-sm text-text-muted list-disc list-inside">
+                  {(displayStartup.aiValidationReport.recommendations || []).map((r, i) => (
+                    <li key={i}>{r}</li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <p className="text-sm text-text-muted">No validation report available.</p>
+            )}
+          </div>
+        </div>
+      </div>
 
-      {/* Investment Modal */}
       <Modal
         show={showInvestModal}
         onHide={() => setShowInvestModal(false)}
         title="Record Investment"
         footer={
           <>
-            <Button className="btn btn-secondary-custom" onClick={() => setShowInvestModal(false)}>
+            <button
+              type="button"
+              onClick={() => setShowInvestModal(false)}
+              className="px-4 py-2 rounded-btn text-sm font-medium bg-slate-100 text-text hover:bg-slate-200 transition-smooth"
+            >
               Cancel
-            </Button>
-            <Button className="btn btn-primary-custom" onClick={handleRecordInvestment}>
+            </button>
+            <button
+              type="button"
+              onClick={handleRecordInvestment}
+              className="px-4 py-2 rounded-btn text-sm font-medium bg-primary text-white hover:bg-primary-hover transition-smooth"
+            >
               Confirm
-            </Button>
+            </button>
           </>
         }
       >
-        <label className="form-label">Amount ($)</label>
+        <label className="block text-sm font-medium text-text mb-1.5">Amount ($)</label>
         <input
           type="number"
-          className="form-control"
           placeholder="e.g. 10000"
           value={investAmount}
           onChange={(e) => setInvestAmount(e.target.value)}
+          className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
         />
       </Modal>
     </div>

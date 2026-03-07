@@ -1,17 +1,15 @@
 /**
  * StartupList - List all validated startups with filters.
- * Filterable by industry, funding needed, stage.
  */
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Form, Table, Spinner, Alert } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import StartupCard from '../../components/StartupCard'
 import { getStartups } from '../../services/api'
 
 function StartupList() {
   const [startups, setStartups] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const [viewMode, setViewMode] = useState('cards') // 'cards' or 'table'
+  const [viewMode, setViewMode] = useState('cards')
   const [filters, setFilters] = useState({
     industry: '',
     fundingNeeded: '',
@@ -24,7 +22,6 @@ function StartupList() {
         const data = await getStartups(filters)
         setStartups(data.startups || data || [])
       } catch (err) {
-        setError(err.message || 'Failed to load startups')
         setStartups([])
       } finally {
         setLoading(false)
@@ -49,120 +46,108 @@ function StartupList() {
 
   return (
     <div>
-      <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-          <h1 className="h3 fw-bold text-charcoal">Startup List</h1>
-          <p className="text-muted mb-0">All validated startups</p>
+          <h1 className="text-2xl font-semibold text-text">Startup List</h1>
+          <p className="text-text-muted text-sm mt-0.5">All validated startups</p>
         </div>
-        <div className="d-flex gap-2">
-          <Form.Select
-            size="sm"
-            style={{ width: 140 }}
-            value={viewMode}
-            onChange={(e) => setViewMode(e.target.value)}
-          >
-            <option value="cards">Cards</option>
-            <option value="table">Table</option>
-          </Form.Select>
-        </div>
+        <select
+          value={viewMode}
+          onChange={(e) => setViewMode(e.target.value)}
+          className="w-full sm:w-36 px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+        >
+          <option value="cards">Cards</option>
+          <option value="table">Table</option>
+        </select>
       </div>
 
-      {/* Filters */}
-      <div className="section-dark rounded p-3 mb-4">
-        <Row className="g-2">
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label className="text-white small mb-1">Industry</Form.Label>
-              <Form.Select
-                value={filters.industry}
-                onChange={(e) => setFilters({ ...filters, industry: e.target.value })}
-                className="bg-dark text-white border-secondary"
-              >
-                <option value="">All</option>
-                <option value="Technology">Technology</option>
-                <option value="Healthcare">Healthcare</option>
-                <option value="Sustainability">Sustainability</option>
-                <option value="Education">Education</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label className="text-white small mb-1">Stage</Form.Label>
-              <Form.Select
-                value={filters.stage}
-                onChange={(e) => setFilters({ ...filters, stage: e.target.value })}
-                className="bg-dark text-white border-secondary"
-              >
-                <option value="">All</option>
-                <option value="Seed">Seed</option>
-                <option value="Early Stage">Early Stage</option>
-                <option value="Series A">Series A</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label className="text-white small mb-1">Funding Needed</Form.Label>
-              <Form.Select
-                value={filters.fundingNeeded}
-                onChange={(e) => setFilters({ ...filters, fundingNeeded: e.target.value })}
-                className="bg-dark text-white border-secondary"
-              >
-                <option value="">All</option>
-                <option value="50K">Up to $50K</option>
-                <option value="100K">Up to $100K</option>
-                <option value="250K">Up to $250K</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-        </Row>
+      <div className="bg-white rounded-card shadow-card border border-slate-100 p-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-xs font-medium text-text-muted mb-1.5">Industry</label>
+            <select
+              value={filters.industry}
+              onChange={(e) => setFilters({ ...filters, industry: e.target.value })}
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+            >
+              <option value="">All</option>
+              <option value="Technology">Technology</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Sustainability">Sustainability</option>
+              <option value="Education">Education</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-text-muted mb-1.5">Stage</label>
+            <select
+              value={filters.stage}
+              onChange={(e) => setFilters({ ...filters, stage: e.target.value })}
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+            >
+              <option value="">All</option>
+              <option value="Seed">Seed</option>
+              <option value="Early Stage">Early Stage</option>
+              <option value="Series A">Series A</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-medium text-text-muted mb-1.5">Funding Needed</label>
+            <select
+              value={filters.fundingNeeded}
+              onChange={(e) => setFilters({ ...filters, fundingNeeded: e.target.value })}
+              className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+            >
+              <option value="">All</option>
+              <option value="50K">Up to $50K</option>
+              <option value="100K">Up to $100K</option>
+              <option value="250K">Up to $250K</option>
+            </select>
+          </div>
+        </div>
       </div>
-
-      {error && <Alert variant="warning">Using demo data. {error}</Alert>}
 
       {loading ? (
-        <div className="text-center py-5">
-          <Spinner animation="border" style={{ color: 'var(--color-accent)' }} />
+        <div className="flex flex-col items-center justify-center py-16">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : viewMode === 'cards' ? (
-        <Row xs={1} md={2} lg={3} className="g-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredStartups.map((startup) => (
-            <Col key={startup.id}>
-              <StartupCard startup={startup} />
-            </Col>
+            <StartupCard key={startup.id} startup={startup} />
           ))}
-        </Row>
+        </div>
       ) : (
-        <Table responsive bordered hover>
-          <thead style={{ backgroundColor: 'var(--color-charcoal)', color: 'white' }}>
-            <tr>
-              <th>Name</th>
-              <th>Industry</th>
-              <th>Stage</th>
-              <th>Funding Needed</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredStartups.map((startup) => (
-              <tr key={startup.id}>
-                <td>{startup.name}</td>
-                <td>{startup.industry}</td>
-                <td>{startup.stage}</td>
-                <td>{startup.fundingNeeded}</td>
-                <td>
-                  <a
-                    href={`/investor/startups/${startup.id}`}
-                    className="btn btn-sm btn-primary-custom rounded-0"
-                  >
-                    View
-                  </a>
-                </td>
+        <div className="bg-white rounded-card shadow-card border border-slate-100 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead className="bg-primary text-white">
+              <tr>
+                <th className="text-left px-4 py-3 font-medium">Name</th>
+                <th className="text-left px-4 py-3 font-medium">Industry</th>
+                <th className="text-left px-4 py-3 font-medium">Stage</th>
+                <th className="text-left px-4 py-3 font-medium">Funding Needed</th>
+                <th className="text-left px-4 py-3 font-medium">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {filteredStartups.map((startup) => (
+                <tr key={startup.id} className="border-t border-slate-100 hover:bg-slate-50/50">
+                  <td className="px-4 py-3 font-medium text-text">{startup.name}</td>
+                  <td className="px-4 py-3 text-text-muted">{startup.industry}</td>
+                  <td className="px-4 py-3 text-text-muted">{startup.stage}</td>
+                  <td className="px-4 py-3 text-text-muted">{startup.fundingNeeded}</td>
+                  <td className="px-4 py-3">
+                    <Link
+                      to={`/investor/startups/${startup.id}`}
+                      className="text-primary font-medium hover:underline"
+                    >
+                      View
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   )

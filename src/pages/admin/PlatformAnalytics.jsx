@@ -1,15 +1,12 @@
 /**
  * PlatformAnalytics - Basic stats: users, startups, investments.
- * Inspired by inspo design: grid of stat cards with orange accent.
  */
 import React, { useState, useEffect } from 'react'
-import { Row, Col, Card, Spinner, Alert } from 'react-bootstrap'
 import { getPlatformAnalytics } from '../../services/api'
 
 function PlatformAnalytics() {
   const [analytics, setAnalytics] = useState(null)
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +14,6 @@ function PlatformAnalytics() {
         const data = await getPlatformAnalytics()
         setAnalytics(data)
       } catch (err) {
-        setError(err.message || 'Failed to load analytics')
         setAnalytics(null)
       } finally {
         setLoading(false)
@@ -36,48 +32,77 @@ function PlatformAnalytics() {
   const stats = analytics || mockAnalytics
 
   const statCards = [
-    { label: 'Total Users', value: stats.totalUsers, icon: '👥', color: 'var(--color-accent)' },
-    { label: 'Total Startups', value: stats.totalStartups, icon: '🚀', color: 'var(--color-charcoal)' },
-    { label: 'Total Investments', value: stats.totalInvestments, icon: '💰', color: 'var(--color-accent)' },
-    { label: 'Funding Raised', value: stats.totalFundingRaised, icon: '📈', color: 'var(--color-charcoal)' },
+    { label: 'Total Users', value: stats.totalUsers, icon: UsersIcon, bg: 'bg-primary' },
+    { label: 'Total Startups', value: stats.totalStartups, icon: RocketIcon, bg: 'bg-secondary' },
+    { label: 'Total Investments', value: stats.totalInvestments, icon: ChartIcon, bg: 'bg-accent' },
+    { label: 'Funding Raised', value: stats.totalFundingRaised, icon: MoneyIcon, bg: 'bg-primary' },
   ]
 
   return (
     <div>
-      <div className="mb-4">
-        <h1 className="h3 fw-bold text-charcoal">Platform Analytics</h1>
-        <p className="text-muted mb-0">Overview of platform metrics</p>
+      <div className="mb-6">
+        <h1 className="text-2xl font-semibold text-text">Platform Analytics</h1>
+        <p className="text-text-muted text-sm mt-0.5">Overview of platform metrics</p>
       </div>
 
-      {error && <Alert variant="warning">Using demo data. {error}</Alert>}
-
       {loading ? (
-        <div className="text-center py-5">
-          <Spinner animation="border" style={{ color: 'var(--color-accent)' }} />
+        <div className="flex flex-col items-center justify-center py-16">
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : (
-        <Row xs={1} md={2} lg={4} className="g-4">
-          {statCards.map((stat, i) => (
-            <Col key={i}>
-              <Card className="card-custom h-100 border-0 shadow-sm">
-                <Card.Body className="d-flex align-items-center">
-                  <div
-                    className="rounded-circle d-flex align-items-center justify-content-center me-3"
-                    style={{ width: 56, height: 56, backgroundColor: stat.color, color: 'white' }}
-                  >
-                    <span style={{ fontSize: '1.5rem' }}>{stat.icon}</span>
-                  </div>
-                  <div>
-                    <Card.Title className="h4 mb-0">{stat.value}</Card.Title>
-                    <Card.Text className="text-muted small mb-0">{stat.label}</Card.Text>
-                  </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {statCards.map((stat, i) => {
+            const Icon = stat.icon
+            return (
+              <div
+                key={i}
+                className="bg-white rounded-card shadow-card border border-slate-100 p-5 flex items-center gap-4 hover:shadow-card-hover transition-smooth"
+              >
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white shrink-0 ${stat.bg}`}>
+                  <Icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <p className="text-2xl font-semibold text-text">{stat.value}</p>
+                  <p className="text-sm text-text-muted">{stat.label}</p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
       )}
     </div>
+  )
+}
+
+function UsersIcon({ className }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
+  )
+}
+
+function RocketIcon({ className }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+    </svg>
+  )
+}
+
+function ChartIcon({ className }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m-6 0a2 2 0 002-2V5a2 2 0 012-2h2a2 2 0 012 2v3a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+    </svg>
+  )
+}
+
+function MoneyIcon({ className }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
   )
 }
 

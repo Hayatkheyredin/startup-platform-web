@@ -1,71 +1,98 @@
 /**
- * Navbar - Top navigation bar (inspired by inspo design).
- * White background, logo, nav links, primary orange CTA button.
+ * Navbar - Top navigation bar. Midnight Teal theme, clean SaaS style.
  */
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Navbar as BSNavbar, Nav, Button, Container } from 'react-bootstrap'
 
 function Navbar({ role = 'investor' }) {
   const navigate = useNavigate()
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const handleLogout = () => {
-    // Placeholder - clear auth and redirect to login
     localStorage.removeItem('authToken')
     navigate('/login')
   }
 
   const investorLinks = [
-    { to: '/investor', label: 'HOME' },
-    { to: '/investor/startups', label: 'STARTUPS' },
-    { to: '/investor/investments', label: 'MY INVESTMENTS' },
+    { to: '/investor', label: 'Home' },
+    { to: '/investor/startups', label: 'Startups' },
+    { to: '/investor/investments', label: 'My Investments' },
   ]
 
   const adminLinks = [
-    { to: '/admin/users', label: 'USERS' },
-    { to: '/admin/startups', label: 'STARTUPS' },
-    { to: '/admin/analytics', label: 'ANALYTICS' },
+    { to: '/admin/users', label: 'Users' },
+    { to: '/admin/startups', label: 'Startups' },
+    { to: '/admin/analytics', label: 'Analytics' },
   ]
 
   const links = role === 'admin' ? adminLinks : investorLinks
+  const homePath = role === 'admin' ? '/admin' : '/investor'
 
   return (
-    <BSNavbar bg="white" expand="lg" className="shadow-sm border-bottom">
-      <Container fluid>
-        <BSNavbar.Brand as={Link} to={role === 'admin' ? '/admin' : '/investor'} className="d-flex align-items-center">
-          <div
-            className="rounded-circle bg-charcoal d-flex align-items-center justify-content-center me-2"
-            style={{ width: 40, height: 40, backgroundColor: 'var(--color-charcoal)' }}
-          >
-            <span className="text-white fw-bold" style={{ fontSize: '1rem' }}>WSP</span>
-          </div>
-          <span className="fw-semibold text-dark d-none d-sm-inline">Women Startup Platform</span>
-        </BSNavbar.Brand>
+    <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200/80 sticky top-0 z-50 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-14 md:h-16">
+          <Link to={homePath} className="flex items-center gap-3 shrink-0 group">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-sm shadow-card group-hover:shadow-card-hover transition-smooth">
+              WSP
+            </div>
+            <span className="font-semibold text-text hidden sm:inline">Women Startup Platform</span>
+          </Link>
 
-        <BSNavbar.Toggle aria-controls="main-navbar" />
-        <BSNavbar.Collapse id="main-navbar">
-          <Nav className="me-auto">
+          <nav className="hidden md:flex items-center gap-0.5">
             {links.map((link) => (
-              <Nav.Link
+              <Link
                 key={link.to}
-                as={Link}
                 to={link.to}
-                className="text-uppercase fw-medium px-3"
-                style={{ fontSize: '0.85rem', color: 'var(--color-charcoal)' }}
+                className="px-4 py-2 rounded-xl text-sm font-medium text-text-muted hover:text-primary hover:bg-primary/5 transition-smooth"
               >
                 {link.label}
-              </Nav.Link>
+              </Link>
             ))}
-          </Nav>
-          <Button
-className="btn btn-primary-custom rounded-0 px-4"
-            onClick={handleLogout}
-          >
-            Logout
-          </Button>
-        </BSNavbar.Collapse>
-      </Container>
-    </BSNavbar>
+          </nav>
+
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary-hover transition-smooth shadow-card hover:shadow-card-hover"
+            >
+              Logout
+            </button>
+            <button
+              type="button"
+              className="md:hidden p-2 rounded-btn text-text hover:bg-slate-100"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {menuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {menuOpen && (
+          <div className="md:hidden py-3 border-t border-slate-100">
+            <div className="flex flex-col gap-1">
+              {links.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setMenuOpen(false)}
+                  className="px-3 py-2 rounded-btn text-sm font-medium text-text hover:bg-slate-50"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
   )
 }
 
