@@ -4,7 +4,24 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import StartupCard from '../../components/StartupCard'
+import EmptyState from '../../components/ui/EmptyState'
 import { getInvestorInvestments } from '../../services/api'
+
+function HeartIcon({ className }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>
+  )
+}
+
+function WalletIcon({ className }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2h-2a2 2 0 00-2 2v6a2 2 0 002 2zm-12-2h.01" />
+    </svg>
+  )
+}
 
 function InvestmentManagement() {
   const [data, setData] = useState({ interested: [], invested: [] })
@@ -53,8 +70,8 @@ function InvestmentManagement() {
             <button
               type="button"
               onClick={() => setActiveTab('interested')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-smooth ${
-                activeTab === 'interested' ? 'bg-white text-text shadow-card' : 'text-text-muted hover:text-text'
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                activeTab === 'interested' ? 'bg-white text-text shadow-card' : 'text-text-muted hover:text-text hover:bg-white/50'
               }`}
             >
               Interested ({interested.length})
@@ -62,8 +79,8 @@ function InvestmentManagement() {
             <button
               type="button"
               onClick={() => setActiveTab('invested')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-smooth ${
-                activeTab === 'invested' ? 'bg-white text-text shadow-card' : 'text-text-muted hover:text-text'
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                activeTab === 'invested' ? 'bg-white text-text shadow-card' : 'text-text-muted hover:text-text hover:bg-white/50'
               }`}
             >
               Invested ({invested.length})
@@ -71,17 +88,45 @@ function InvestmentManagement() {
           </div>
 
           {activeTab === 'interested' && (
+            interested.length === 0 ? (
+              <EmptyState
+                icon={HeartIcon}
+                title="No startups in your list yet"
+                description="Save startups you're interested in to track them here and get updates."
+                action={
+                  <Link
+                    to="/investor/startups"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-primary text-white hover:bg-primary-hover transition-all duration-200 hover:scale-105 active:scale-95"
+                  >
+                    Browse Startups →
+                  </Link>
+                }
+              />
+            ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {interested.map((startup) => (
                 <StartupCard key={startup.id} startup={startup} />
               ))}
-              {interested.length === 0 && (
-                <p className="text-text-muted col-span-full">No startups in your interest list yet.</p>
-              )}
             </div>
+            )
           )}
 
           {activeTab === 'invested' && (
+            invested.length === 0 ? (
+              <EmptyState
+                icon={WalletIcon}
+                title="No investments yet"
+                description="When you invest in startups, they'll appear here with amount and date."
+                action={
+                  <Link
+                    to="/investor/startups"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-primary text-white hover:bg-primary-hover transition-all duration-200 hover:scale-105 active:scale-95"
+                  >
+                    Explore Startups →
+                  </Link>
+                }
+              />
+            ) : (
             <>
               <div className="bg-white rounded-card shadow-card border border-slate-100 overflow-hidden">
                 <table className="w-full text-sm">
@@ -96,7 +141,7 @@ function InvestmentManagement() {
                   </thead>
                   <tbody>
                     {invested.map((s) => (
-                      <tr key={s.id} className="border-t border-slate-100 hover:bg-slate-50/50">
+                      <tr key={s.id} className="border-t border-slate-100 hover:bg-slate-50/50 transition-colors">
                         <td className="px-4 py-3 font-medium text-text">{s.name}</td>
                         <td className="px-4 py-3 text-text-muted">{s.industry}</td>
                         <td className="px-4 py-3 text-text-muted">{s.investedAmount || 'N/A'}</td>
@@ -114,10 +159,8 @@ function InvestmentManagement() {
                   </tbody>
                 </table>
               </div>
-              {invested.length === 0 && (
-                <p className="text-text-muted mt-4">No investments recorded yet.</p>
-              )}
             </>
+            )
           )}
         </>
       )}

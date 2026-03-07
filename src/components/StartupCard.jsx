@@ -32,7 +32,13 @@ function StartupCard({ startup, showInvestButton = true, linkPrefix = '/investor
     shortDescription = 'Brief description of the startup idea and value proposition.',
     imageUrl,
     status,
+    fundingProgress,
   } = startup
+
+  // Demo: derive progress from id if not provided (0-100)
+  const progressPercent = fundingProgress != null
+    ? Math.min(100, Math.max(0, Number(fundingProgress)))
+    : (() => { const n = parseInt(String(id).replace(/\D/g, '1'), 10); return Math.min(95, Math.max(12, (n * 17 + 35) % 85)); })()
 
   const [imgError, setImgError] = useState(false)
   const placeholderUrl = getImageUrl(null, id, industry)
@@ -79,14 +85,23 @@ function StartupCard({ startup, showInvestButton = true, linkPrefix = '/investor
           </span>
         </div>
         <p className="text-sm text-text-muted flex-1 line-clamp-2 mb-4">{shortDescription}</p>
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-xs text-text-muted uppercase tracking-wide">Funding needed</span>
-          <span className="font-semibold text-primary">{fundingNeeded}</span>
+        <div className="mb-4">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-xs text-text-muted uppercase tracking-wide">Funding needed</span>
+            <span className="font-semibold text-primary">{fundingNeeded}</span>
+          </div>
+          <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-primary to-secondary transition-all duration-500 ease-out"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+          <p className="text-xs text-text-muted mt-1">{progressPercent}% raised</p>
         </div>
         {showInvestButton && (
           <Link
             to={`${linkPrefix}/startups/${id}`}
-            className="mt-auto block w-full py-2.5 px-4 rounded-xl text-center text-sm font-semibold bg-primary text-white hover:bg-primary-hover transition-all duration-200 shadow-card hover:shadow-glow"
+            className="mt-auto block w-full py-2.5 px-4 rounded-xl text-center text-sm font-semibold bg-primary text-white hover:bg-primary-hover transition-all duration-200 shadow-card hover:shadow-glow hover:scale-[1.02] active:scale-[0.98]"
           >
             View Details →
           </Link>
