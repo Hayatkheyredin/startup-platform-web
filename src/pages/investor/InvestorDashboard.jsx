@@ -2,6 +2,7 @@
  * InvestorDashboard - Data-rich overview with stats, charts, trending startups, and activity.
  */
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   LineChart,
   Line,
@@ -68,6 +69,7 @@ const RECENT_ACTIVITY = [
 function InvestorDashboard() {
   const [startups, setStartups] = useState([])
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,11 +97,16 @@ function InvestorDashboard() {
     <div className="animate-fade-in space-y-8">
       {/* Welcome strip */}
       <div className="relative overflow-hidden rounded-2xl bg-primary p-6 md:p-8 text-white shadow-card">
-        <div className="relative z-10">
-          <h1 className="text-2xl md:text-3xl font-bold mb-1">Welcome back</h1>
-          <p className="text-white/90 text-sm md:text-base">
-            Discover and support validated women-led startups
-          </p>
+        <div className="relative z-10 flex justify-between items-start">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold mb-1">Welcome back</h1>
+            <p className="text-white/90 text-sm md:text-base">
+              Discover and support validated women-led startups
+            </p>
+          </div>
+          <button className="bg-gradient-to-r from-brand-dark to-secondary text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-200" onClick={() => navigate('/investor/premium')}>
+             Upgrade to Premium 
+          </button>
         </div>
         <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-2xl" />
       </div>

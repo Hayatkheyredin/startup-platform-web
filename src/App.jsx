@@ -15,6 +15,7 @@ import InvestorDashboard from './pages/investor/InvestorDashboard'
 import StartupList from './pages/investor/StartupList'
 import StartupDetail from './pages/investor/StartupDetail'
 import InvestmentManagement from './pages/investor/InvestmentManagement'
+import PremiumFeatures from './pages/investor/PremiumFeatures'
 
 // Admin
 import AdminLoginPage from './pages/admin/AdminLoginPage'
@@ -50,6 +51,7 @@ function App() {
         <Route path="startups" element={<StartupList />} />
         <Route path="startups/:id" element={<StartupDetail />} />
         <Route path="investments" element={<InvestmentManagement />} />
+        <Route path="premium" element={<PremiumFeatures />} />
       </Route>
 
       {/* Catch-all */}
