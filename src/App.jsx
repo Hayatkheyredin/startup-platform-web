@@ -7,9 +7,14 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import MainLayout from './components/layout/MainLayout'
 import AdminGuard from './components/AdminGuard'
 
-// Landing & placeholders
+// Landing
 import LandingPage from './pages/LandingPage'
-import InvestorPlaceholder from './pages/investor/InvestorPlaceholder'
+
+// Investor dashboard (no auth guard for now)
+import InvestorDashboard from './pages/investor/InvestorDashboard'
+import StartupList from './pages/investor/StartupList'
+import StartupDetail from './pages/investor/StartupDetail'
+import InvestmentManagement from './pages/investor/InvestmentManagement'
 
 // Admin
 import AdminLoginPage from './pages/admin/AdminLoginPage'
@@ -39,8 +44,13 @@ function App() {
         <Route path="analytics" element={<PlatformAnalytics />} />
       </Route>
 
-      {/* Investor: placeholder until you approve and we build the flow */}
-      <Route path="/investor" element={<InvestorPlaceholder />} />
+      {/* Investor: dashboard with sidebar */}
+      <Route path="/investor" element={<MainLayout role="investor" />}>
+        <Route index element={<InvestorDashboard />} />
+        <Route path="startups" element={<StartupList />} />
+        <Route path="startups/:id" element={<StartupDetail />} />
+        <Route path="investments" element={<InvestmentManagement />} />
+      </Route>
 
       {/* Catch-all */}
       <Route path="*" element={<Navigate to="/" replace />} />
