@@ -1,8 +1,10 @@
 /**
- * Navbar - Top navigation bar. Midnight Teal theme, clean SaaS style.
+ * Navbar - Top navigation. MELIKA theme #ff5bae.
  */
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+
+const LOGO_URL = '/melika-logo.png'
 
 function Navbar({ role = 'investor' }) {
   const navigate = useNavigate()
@@ -34,10 +36,8 @@ function Navbar({ role = 'investor' }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 md:h-16">
           <Link to={homePath} className="flex items-center gap-3 shrink-0 group">
-            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:opacity-90 transition-opacity">
-              WSP
-            </div>
-            <span className="font-semibold text-text hidden sm:inline">Women Startup Platform</span>
+            <img src={LOGO_URL} alt="MELIKA" className="h-9 md:h-10 w-auto object-contain group-hover:opacity-90 transition-opacity" />
+            <span className="font-semibold text-text hidden sm:inline">MELIKA</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-0.5">

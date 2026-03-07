@@ -7,16 +7,16 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: '#F3E8FE',        // primary brand (lavender)
-        'brand-dark': '#E9D5FF', // hover/emphasis
-        primary: '#6D28D9',      // violet for text/buttons on brand/white
-        'primary-hover': '#5B21B6',
-        secondary: '#7C3AED',    // purple accent (brand family)
-        'secondary-hover': '#6D28D9',
-        accent: '#7C3AED',
-        'accent-hover': '#6D28D9',
-        success: '#6B21A8',
-        surface: '#F3E8FE',      // app background = brand
+        brand: '#fff0f7',        // light pink tint (#ff5bae based)
+        'brand-dark': '#ffd6eb', // hover/emphasis
+        primary: '#ff5bae',      // MELIKA pink
+        'primary-hover': '#e84a9d',
+        secondary: '#ff5bae',
+        'secondary-hover': '#e84a9d',
+        accent: '#ff5bae',
+        'accent-hover': '#e84a9d',
+        success: '#e84a9d',
+        surface: '#fff0f7',      // app background = brand
         text: '#1C1917',
         'text-muted': '#6B7280',
       },
@@ -29,8 +29,8 @@ export default {
       },
       boxShadow: {
         'card': '0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05)',
-        'card-hover': '0 12px 28px -8px rgb(243 232 254 / 0.4), 0 4px 14px -4px rgb(0 0 0 / 0.06)',
-        'glow': '0 0 0 1px rgb(243 232 254 / 0.5), 0 8px 24px -4px rgb(243 232 254 / 0.25)',
+        'card-hover': '0 12px 28px -8px rgb(255 91 174 / 0.25), 0 4px 14px -4px rgb(0 0 0 / 0.06)',
+        'glow': '0 0 0 1px rgb(255 91 174 / 0.2), 0 8px 24px -4px rgb(255 91 174 / 0.15)',
       },
       animation: {
         'fade-in': 'fadeIn 0.35s ease-out',

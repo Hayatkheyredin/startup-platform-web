@@ -54,11 +54,9 @@ function LoginPage() {
       <div className="flex-1 flex items-center justify-center p-6 md:p-10 bg-gradient-to-br from-primary via-primary to-primary-hover">
         <div className="w-full max-w-md">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-12 h-12 rounded-xl bg-white/15 flex items-center justify-center text-white font-bold text-lg">
-              WSP
-            </div>
+            <img src="/melika-logo.png" alt="MELIKA" className="h-12 w-auto object-contain" />
             <div>
-              <h1 className="text-xl font-semibold text-white">Women Startup Platform</h1>
+              <h1 className="text-xl font-semibold text-white">MELIKA</h1>
               <p className="text-sm text-white/80">Sign in to your account</p>
             </div>
           </div>

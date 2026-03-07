@@ -43,11 +43,11 @@ const FUNDING_GROWTH_DATA = [
 ]
 
 const INDUSTRY_DISTRIBUTION = [
-  { name: 'Technology', value: 38, color: '#6D28D9' },
-  { name: 'Healthcare', value: 24, color: '#7C3AED' },
-  { name: 'Sustainability', value: 18, color: '#8B5CF6' },
-  { name: 'Education', value: 12, color: '#A78BFA' },
-  { name: 'Other', value: 8, color: '#C4B5FD' },
+  { name: 'Technology', value: 38, color: '#ff5bae' },
+  { name: 'Healthcare', value: 24, color: '#ff7bc4' },
+  { name: 'Sustainability', value: 18, color: '#ff9bd4' },
+  { name: 'Education', value: 12, color: '#ffbbe4' },
+  { name: 'Other', value: 8, color: '#ffd6ef' },
 ]
 
 const MONTHLY_INVESTMENTS = [
@@ -142,7 +142,7 @@ function InvestorDashboard() {
                   contentStyle={{ borderRadius: 8, border: '1px solid #e2e8f0' }}
                   formatter={(value) => [`$${value}K`, 'Amount']}
                 />
-                <Line type="monotone" dataKey="amount" stroke="#6D28D9" strokeWidth={2} dot={{ fill: '#6D28D9' }} />
+                <Line type="monotone" dataKey="amount" stroke="#ff5bae" strokeWidth={2} dot={{ fill: '#ff5bae' }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -184,7 +184,7 @@ function InvestorDashboard() {
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} stroke="#94a3b8" />
                 <YAxis tick={{ fontSize: 12 }} stroke="#94a3b8" />
                 <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #e2e8f0' }} />
-                <Bar dataKey="count" fill="#6D28D9" radius={[4, 4, 0, 0]} name="Deals" />
+                <Bar dataKey="count" fill="#ff5bae" radius={[4, 4, 0, 0]} name="Deals" />
               </BarChart>
             </ResponsiveContainer>
           </div>

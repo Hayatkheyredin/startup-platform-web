@@ -1,11 +1,12 @@
 /**
- * Landing Page — Women-led startup investment platform.
- * Brand: #F3E8FE + white. No emojis; professional imagery.
+ * Landing Page — MELIKA. Women-led startup investment platform.
+ * Theme: #ff5bae.
  */
 import React from 'react'
 import { Link } from 'react-router-dom'
 
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80'
+const LOGO_URL = '/melika-logo.png'
 
 const IconDiscovery = () => (
   <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -58,11 +59,9 @@ function LandingPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-base md:text-lg shadow-sm">
-                WSP
-              </div>
-              <span className="text-lg md:text-xl font-bold text-text">
-                Women Startup Platform
+              <img src={LOGO_URL} alt="MELIKA" className="h-10 md:h-12 w-auto object-contain" />
+              <span className="text-lg md:text-xl font-bold text-text hidden sm:inline">
+                MELIKA
               </span>
             </Link>
             <nav className="flex items-center gap-4 md:gap-6">
@@ -120,7 +119,7 @@ function LandingPage() {
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-text mb-6">Our Mission</h2>
               <p className="text-lg text-text-muted leading-relaxed mb-4">
-                Women Startup Platform exists to close the funding gap for women entrepreneurs. We believe great ideas deserve capital regardless of who pitches them.
+                MELIKA exists to close the funding gap for women entrepreneurs. We believe great ideas deserve capital regardless of who pitches them.
               </p>
               <p className="text-lg text-text-muted leading-relaxed">
                 We empower women founders by connecting them with mission-driven investors, and we give investors a single place to discover, validate, and fund high-potential women-led ventures.
@@ -242,8 +241,8 @@ function LandingPage() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div>
               <Link to="/" className="inline-flex items-center gap-2 mb-4">
-                <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-sm">WSP</div>
-                <span className="font-bold text-text">Women Startup Platform</span>
+                <img src={LOGO_URL} alt="MELIKA" className="h-9 w-auto object-contain" />
+                <span className="font-bold text-text">MELIKA</span>
               </Link>
               <nav className="flex flex-wrap gap-6">
                 <a href="#" className="text-sm text-text-muted hover:text-primary transition-colors">Home</a>
@@ -265,7 +264,7 @@ function LandingPage() {
             </div>
           </div>
           <div className="border-t border-brand-dark/30 mt-10 pt-8 text-center md:text-left">
-            <p className="text-sm text-text-muted">© {new Date().getFullYear()} Women Startup Platform. All rights reserved.</p>
+            <p className="text-sm text-text-muted">© {new Date().getFullYear()} MELIKA. All rights reserved.</p>
           </div>
         </div>
       </footer>

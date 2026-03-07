@@ -10,7 +10,7 @@ function InvestorPlaceholder() {
       <header className="bg-white border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 text-text font-semibold hover:text-primary">
-            ← Women Startup Platform
+            ← MELIKA
           </Link>
         </div>
       </header>
