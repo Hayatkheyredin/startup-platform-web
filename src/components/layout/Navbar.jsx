@@ -30,11 +30,11 @@ function Navbar({ role = 'investor' }) {
   const homePath = role === 'admin' ? '/admin' : '/investor'
 
   return (
-    <header className="bg-white/95 backdrop-blur-sm border-b border-slate-200/80 sticky top-0 z-50 shadow-sm">
+    <header className="bg-white border-b border-brand-dark/30 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 md:h-16">
           <Link to={homePath} className="flex items-center gap-3 shrink-0 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-sm shadow-card group-hover:shadow-card-hover transition-smooth">
+            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-sm shadow-sm group-hover:opacity-90 transition-opacity">
               WSP
             </div>
             <span className="font-semibold text-text hidden sm:inline">Women Startup Platform</span>
@@ -45,7 +45,7 @@ function Navbar({ role = 'investor' }) {
               <Link
                 key={link.to}
                 to={link.to}
-                className="px-4 py-2 rounded-xl text-sm font-medium text-text-muted hover:text-primary hover:bg-primary/5 transition-smooth"
+                className="px-4 py-2 rounded-xl text-sm font-medium text-text-muted hover:text-primary hover:bg-brand transition-colors"
               >
                 {link.label}
               </Link>
@@ -55,7 +55,7 @@ function Navbar({ role = 'investor' }) {
           <div className="flex items-center gap-3">
             <button
               onClick={handleLogout}
-              className="px-4 py-2 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary-hover transition-smooth shadow-card hover:shadow-card-hover"
+              className="px-4 py-2 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary-hover transition-colors shadow-sm"
             >
               Logout
             </button>
@@ -77,14 +77,14 @@ function Navbar({ role = 'investor' }) {
         </div>
 
         {menuOpen && (
-          <div className="md:hidden py-3 border-t border-slate-100">
+          <div className="md:hidden py-3 border-t border-brand-dark/20">
             <div className="flex flex-col gap-1">
               {links.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
                   onClick={() => setMenuOpen(false)}
-                  className="px-3 py-2 rounded-btn text-sm font-medium text-text hover:bg-slate-50"
+                  className="px-3 py-2 rounded-lg text-sm font-medium text-text hover:bg-brand transition-colors"
                 >
                   {link.label}
                 </Link>

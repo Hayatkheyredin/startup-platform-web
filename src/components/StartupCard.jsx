@@ -45,8 +45,8 @@ function StartupCard({ startup, showInvestButton = true, linkPrefix = '/investor
   const resolvedImageUrl = imageUrl || (imgError ? null : placeholderUrl)
 
   return (
-    <div className="group bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden flex flex-col h-full border border-slate-100 hover:border-primary/20 hover:-translate-y-0.5">
-      <div className="h-1 bg-gradient-to-r from-primary to-secondary" />
+    <div className="group bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-300 overflow-hidden flex flex-col h-full border border-brand-dark/30 hover:border-primary/30 hover:-translate-y-0.5">
+      <div className="h-1 bg-primary" />
 
       <div className="relative h-48 overflow-hidden">
         {resolvedImageUrl ? (
@@ -90,9 +90,9 @@ function StartupCard({ startup, showInvestButton = true, linkPrefix = '/investor
             <span className="text-xs text-text-muted uppercase tracking-wide">Funding needed</span>
             <span className="font-semibold text-primary">{fundingNeeded}</span>
           </div>
-          <div className="h-2 rounded-full bg-slate-100 overflow-hidden">
+          <div className="h-2 rounded-full bg-brand overflow-hidden">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-primary to-secondary transition-all duration-500 ease-out"
+              className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
               style={{ width: `${progressPercent}%` }}
             />
           </div>

@@ -61,7 +61,7 @@ function StartupList() {
         </select>
       </div>
 
-      <div className="bg-white rounded-card shadow-card border border-slate-100 p-4 mb-6">
+      <div className="bg-white rounded-card shadow-card border border-brand-dark/30 p-4 mb-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-xs font-medium text-text-muted mb-1.5">Industry</label>
@@ -117,7 +117,7 @@ function StartupList() {
           ))}
         </div>
       ) : (
-        <div className="bg-white rounded-card shadow-card border border-slate-100 overflow-hidden">
+        <div className="bg-white rounded-card shadow-card border border-brand-dark/30 overflow-hidden">
           <table className="w-full text-sm">
             <thead className="bg-primary text-white">
               <tr>

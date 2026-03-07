@@ -8,11 +8,11 @@ import Sidebar from './Sidebar'
 
 function MainLayout({ role = 'investor' }) {
   return (
-    <div className="min-h-screen flex flex-col bg-surface">
+    <div className="min-h-screen flex flex-col bg-brand">
       <Navbar role={role} />
       <div className="flex flex-1">
         <Sidebar role={role} />
-    <main className="flex-1 p-6 lg:p-8 overflow-auto bg-gradient-to-b from-stone-50/80 to-stone-100/50">
+        <main className="flex-1 p-6 lg:p-8 overflow-auto bg-brand">
           <Outlet />
         </main>
       </div>

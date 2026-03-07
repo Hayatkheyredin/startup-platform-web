@@ -86,7 +86,7 @@ function StartupDetail() {
         ← Back
       </button>
 
-      <div className="bg-gradient-to-r from-primary to-secondary rounded-card p-6 mb-6 text-white">
+      <div className="bg-primary rounded-card p-6 mb-6 text-white">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <h1 className="text-xl font-semibold mb-2">{displayStartup.name}</h1>

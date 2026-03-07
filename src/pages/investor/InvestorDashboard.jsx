@@ -20,10 +20,10 @@ import StartupCard from '../../components/StartupCard'
 import { getStartups } from '../../services/api'
 
 const STATS = [
-  { label: 'Total Startups', value: '42', sub: 'Validated', icon: '🚀', color: 'from-primary to-primary/80' },
-  { label: 'Active Investors', value: '128', sub: 'This month', icon: '👥', color: 'from-secondary to-secondary/80' },
-  { label: 'Total Funding Raised', value: '$1.2M', sub: 'All time', icon: '💰', color: 'from-accent to-accent/80' },
-  { label: 'Investments Made', value: '86', sub: 'Deals closed', icon: '📈', color: 'from-success to-success/80' },
+  { label: 'Total Startups', value: '42', sub: 'Validated', color: 'bg-primary' },
+  { label: 'Active Investors', value: '128', sub: 'This month', color: 'bg-primary' },
+  { label: 'Total Funding Raised', value: '$1.2M', sub: 'All time', color: 'bg-primary' },
+  { label: 'Investments Made', value: '86', sub: 'Deals closed', color: 'bg-primary' },
 ]
 
 const FUNDING_GROWTH_DATA = [
@@ -43,10 +43,10 @@ const FUNDING_GROWTH_DATA = [
 
 const INDUSTRY_DISTRIBUTION = [
   { name: 'Technology', value: 38, color: '#6D28D9' },
-  { name: 'Healthcare', value: 24, color: '#E11D48' },
-  { name: 'Sustainability', value: 18, color: '#0EA5E9' },
-  { name: 'Education', value: 12, color: '#10B981' },
-  { name: 'Other', value: 8, color: '#78716C' },
+  { name: 'Healthcare', value: 24, color: '#7C3AED' },
+  { name: 'Sustainability', value: 18, color: '#8B5CF6' },
+  { name: 'Education', value: 12, color: '#A78BFA' },
+  { name: 'Other', value: 8, color: '#C4B5FD' },
 ]
 
 const MONTHLY_INVESTMENTS = [
@@ -58,11 +58,11 @@ const MONTHLY_INVESTMENTS = [
 ]
 
 const RECENT_ACTIVITY = [
-  { type: 'startup', text: 'GreenEats joined the platform', time: '2 hours ago', icon: '🚀' },
-  { type: 'investment', text: 'HealthBridge received $25K investment', time: '5 hours ago', icon: '💰' },
-  { type: 'startup', text: 'EduLearn completed validation', time: 'Yesterday', icon: '✓' },
-  { type: 'investment', text: 'TechFlow Solutions raised $50K', time: 'Yesterday', icon: '📈' },
-  { type: 'startup', text: 'New startup FitWell applied', time: '2 days ago', icon: '🚀' },
+  { text: 'GreenEats joined the platform', time: '2 hours ago' },
+  { text: 'HealthBridge received $25K investment', time: '5 hours ago' },
+  { text: 'EduLearn completed validation', time: 'Yesterday' },
+  { text: 'TechFlow Solutions raised $50K', time: 'Yesterday' },
+  { text: 'New startup FitWell applied', time: '2 days ago' },
 ]
 
 function InvestorDashboard() {
@@ -94,7 +94,7 @@ function InvestorDashboard() {
   return (
     <div className="animate-fade-in space-y-8">
       {/* Welcome strip */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary via-secondary to-accent p-6 md:p-8 text-white shadow-card">
+      <div className="relative overflow-hidden rounded-2xl bg-primary p-6 md:p-8 text-white shadow-card">
         <div className="relative z-10">
           <h1 className="text-2xl md:text-3xl font-bold mb-1">Welcome back</h1>
           <p className="text-white/90 text-sm md:text-base">
@@ -102,7 +102,6 @@ function InvestorDashboard() {
           </p>
         </div>
         <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-2xl" />
-        <div className="absolute bottom-0 right-12 w-40 h-40 bg-white/10 rounded-full translate-y-1/2 blur-xl" />
       </div>
 
       {/* Stats row */}
@@ -110,10 +109,10 @@ function InvestorDashboard() {
         {STATS.map((stat, i) => (
           <div
             key={i}
-            className="bg-white rounded-xl shadow-card border border-slate-100 p-4 hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200"
+            className="bg-white rounded-xl shadow-card border border-brand-dark/30 p-4 hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-200"
           >
-            <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${stat.color} flex items-center justify-center text-white text-lg mb-3`}>
-              {stat.icon}
+            <div className={`w-10 h-10 rounded-lg ${stat.color} flex items-center justify-center mb-3`}>
+              <span className="w-2 h-2 rounded-full bg-white/80" />
             </div>
             <p className="text-2xl font-bold text-text">{stat.value}</p>
             <p className="text-sm font-medium text-text-muted">{stat.label}</p>
@@ -124,7 +123,7 @@ function InvestorDashboard() {
 
       {/* Charts row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-card border border-slate-100 p-5 hover:shadow-card-hover transition-shadow duration-200">
+        <div className="lg:col-span-2 bg-white rounded-xl shadow-card border border-brand-dark/30 p-5 hover:shadow-card-hover transition-shadow duration-200">
           <h3 className="text-sm font-semibold text-text mb-4">Funding growth (K $)</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -141,7 +140,7 @@ function InvestorDashboard() {
             </ResponsiveContainer>
           </div>
         </div>
-        <div className="bg-white rounded-xl shadow-card border border-slate-100 p-5 hover:shadow-card-hover transition-shadow duration-200">
+        <div className="bg-white rounded-xl shadow-card border border-brand-dark/30 p-5 hover:shadow-card-hover transition-shadow duration-200">
           <h3 className="text-sm font-semibold text-text mb-4">Industry distribution</h3>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -169,7 +168,7 @@ function InvestorDashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-xl shadow-card border border-slate-100 p-5 hover:shadow-card-hover transition-shadow duration-200">
+        <div className="lg:col-span-2 bg-white rounded-xl shadow-card border border-brand-dark/30 p-5 hover:shadow-card-hover transition-shadow duration-200">
           <h3 className="text-sm font-semibold text-text mb-4">Monthly investments</h3>
           <div className="h-56">
             <ResponsiveContainer width="100%" height="100%">
@@ -183,14 +182,12 @@ function InvestorDashboard() {
             </ResponsiveContainer>
           </div>
         </div>
-        <div className="bg-white rounded-xl shadow-card border border-slate-100 p-5 hover:shadow-card-hover transition-shadow duration-200">
+        <div className="bg-white rounded-xl shadow-card border border-brand-dark/30 p-5 hover:shadow-card-hover transition-shadow duration-200">
           <h3 className="text-sm font-semibold text-text mb-4">Recent activity</h3>
           <ul className="space-y-3">
             {RECENT_ACTIVITY.map((item, i) => (
               <li key={i} className="flex gap-3 text-sm">
-                <span className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
-                  {item.icon}
-                </span>
+                <span className="w-2 h-2 rounded-full bg-primary shrink-0 mt-1.5" />
                 <div className="min-w-0">
                   <p className="text-text font-medium truncate">{item.text}</p>
                   <p className="text-xs text-text-muted">{item.time}</p>

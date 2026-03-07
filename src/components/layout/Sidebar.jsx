@@ -22,7 +22,7 @@ function Sidebar({ role = 'investor' }) {
   const items = role === 'admin' ? adminItems : investorItems
 
   return (
-    <aside className="w-60 bg-white/80 backdrop-blur-sm border-r border-slate-200/80 min-h-[calc(100vh-4rem)] hidden md:block">
+    <aside className="w-60 bg-white border-r border-brand-dark/30 min-h-[calc(100vh-4rem)] hidden md:block">
       <nav className="p-3 space-y-0.5">
         {items.map((item) => {
           const isActive =
@@ -33,10 +33,10 @@ function Sidebar({ role = 'investor' }) {
             <Link
               key={item.to}
               to={item.to}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-smooth ${
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                 isActive
-                  ? 'bg-gradient-to-r from-primary/15 to-primary/5 text-primary shadow-sm'
-                  : 'text-text-muted hover:bg-slate-50 hover:text-text'
+                  ? 'bg-brand text-primary'
+                  : 'text-text-muted hover:bg-brand hover:text-text'
               }`}
             >
               <span className={isActive ? 'text-primary' : ''}>

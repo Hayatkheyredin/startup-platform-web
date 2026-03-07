@@ -128,7 +128,7 @@ function InvestmentManagement() {
               />
             ) : (
             <>
-              <div className="bg-white rounded-card shadow-card border border-slate-100 overflow-hidden">
+              <div className="bg-white rounded-card shadow-card border border-brand-dark/30 overflow-hidden">
                 <table className="w-full text-sm">
                   <thead className="bg-primary text-white">
                     <tr>
