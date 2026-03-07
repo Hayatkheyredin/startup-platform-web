@@ -18,7 +18,6 @@ function InvestorPlaceholder() {
           <nav className="flex gap-2">
             <Link to="/admin/login" className="px-3 py-2 rounded-lg text-sm font-medium text-text-muted hover:text-primary">Admin</Link>
             <Link to="/investor" className="px-3 py-2 rounded-lg text-sm font-medium text-primary bg-primary/10">Investor</Link>
-            <Link to="/startup" className="px-3 py-2 rounded-lg text-sm font-medium text-text-muted hover:text-primary">Startup</Link>
           </nav>
         </div>
       </header>

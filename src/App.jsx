@@ -1,5 +1,5 @@
 /**
- * App.jsx - Routing: Landing first, then Admin / Investor / Startup flows.
+ * App.jsx - Routing: Landing first, then Admin / Investor flows.
  */
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
@@ -10,7 +10,6 @@ import AdminGuard from './components/AdminGuard'
 // Landing & placeholders
 import LandingPage from './pages/LandingPage'
 import InvestorPlaceholder from './pages/investor/InvestorPlaceholder'
-import StartupPlaceholder from './pages/startup/StartupPlaceholder'
 
 // Admin
 import AdminLoginPage from './pages/admin/AdminLoginPage'
@@ -42,9 +41,6 @@ function App() {
 
       {/* Investor: placeholder until you approve and we build the flow */}
       <Route path="/investor" element={<InvestorPlaceholder />} />
-
-      {/* Startup: placeholder until you approve and we build the flow */}
-      <Route path="/startup" element={<StartupPlaceholder />} />
 
       {/* Catch-all */}
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col bg-surface">
-      {/* Navbar: Logo + name (large) | Admin, Investor, Startup */}
+      {/* Navbar: Logo + name (large) | Admin, Investor */}
       <header className="bg-white border-b border-slate-200/80 sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
@@ -32,12 +32,6 @@ function LandingPage() {
               >
                 Investor
               </Link>
-              <Link
-                to="/startup"
-                className="text-sm font-semibold text-text hover:text-primary transition-colors"
-              >
-                Startup
-              </Link>
             </nav>
           </div>
         </div>
@@ -52,7 +46,7 @@ function LandingPage() {
             </h1>
             <p className="text-lg text-text-muted mb-8">
               A platform connecting women founders with investors. Validate your idea,
-              get funded, and grow. For admins, investors, and founders.
+              get funded, and grow. For admins and investors.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
@@ -67,12 +61,6 @@ function LandingPage() {
               >
                 Investor
               </Link>
-              <Link
-                to="/startup"
-                className="px-6 py-3 rounded-xl font-semibold bg-slate-100 text-text hover:bg-slate-200 transition-colors"
-              >
-                Startup
-              </Link>
             </div>
           </div>
         </section>
@@ -80,7 +68,7 @@ function LandingPage() {
         <section className="border-t border-slate-200 bg-white py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl font-bold text-text text-center mb-10">What we offer</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto">
               <div className="text-center p-6 rounded-2xl bg-slate-50">
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 text-primary text-2xl">
                   👤
@@ -97,15 +85,6 @@ function LandingPage() {
                 <h3 className="font-semibold text-text mb-2">Investor</h3>
                 <p className="text-sm text-text-muted">
                   Discover validated startups, track investments, and support founders.
-                </p>
-              </div>
-              <div className="text-center p-6 rounded-2xl bg-slate-50">
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4 text-primary text-2xl">
-                  🚀
-                </div>
-                <h3 className="font-semibold text-text mb-2">Startup</h3>
-                <p className="text-sm text-text-muted">
-                  Submit your startup, get validated, and connect with investors.
                 </p>
               </div>
             </div>
