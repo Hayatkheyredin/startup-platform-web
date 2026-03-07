@@ -42,9 +42,9 @@ function PremiumFeatures() {
   return (
     <div className="animate-fade-in">
       {/* Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-purple-600 to-purple-800 p-8 md:p-10 text-white shadow-card mb-8">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-primary-hover p-8 md:p-10 text-white shadow-card mb-8">
         <div className="relative z-10">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">Premium Features ⭐</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">Premium Features </h1>
           <p className="text-white/90 text-lg">
             Unlock exclusive benefits and get access to all profiting startups
           </p>
@@ -87,8 +87,8 @@ function PremiumFeatures() {
           </div>
 
           {/* Monthly Plan */}
-          <div className="border-2 border-purple-400 rounded-xl p-6 bg-white shadow-lg relative transform hover:scale-105 transition-all">
-            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+          <div className="border-2 border-primary rounded-xl p-6 bg-white shadow-lg relative transform hover:scale-105 transition-all">
+            <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-white px-3 py-1 rounded-full text-xs font-bold">
               POPULAR
             </div>
             <h3 className="text-xl font-bold text-text mb-2">Monthly Premium</h3>
@@ -98,22 +98,22 @@ function PremiumFeatures() {
               <li className="flex items-center gap-2 text-green-600">
                 <span>●</span> <span className="text-text">Everything in Free</span>
               </li>
-              <li className="flex items-center gap-2 text-purple-600 font-semibold">
+              <li className="flex items-center gap-2 text-primary font-semibold">
                 <span>*</span> <span className="text-text">Profiting startups filter</span>
               </li>
-              <li className="flex items-center gap-2 text-purple-600 font-semibold">
+              <li className="flex items-center gap-2 text-primary font-semibold">
                 <span>*</span> <span className="text-text">24h early access</span>
               </li>
-              <li className="flex items-center gap-2 text-purple-600 font-semibold">
+              <li className="flex items-center gap-2 text-primary font-semibold">
                 <span>*</span> <span className="text-text">Advanced analytics</span>
               </li>
-              <li className="flex items-center gap-2 text-purple-600 font-semibold">
+              <li className="flex items-center gap-2 text-primary font-semibold">
                 <span>*</span> <span className="text-text">Priority support</span>
               </li>
             </ul>
             <button 
               onClick={() => handlePlanSelect('monthly')}
-              className="w-full bg-gradient-to-r from-purple-600 to-purple-800 text-white py-2 rounded-lg font-medium hover:shadow-lg transition-all"
+              className="w-full bg-gradient-to-r from-primary to-primary-hover text-white py-2 rounded-lg font-medium hover:shadow-lg transition-all"
             >
               Choose Monthly
             </button>
@@ -129,13 +129,13 @@ function PremiumFeatures() {
               <li className="flex items-center gap-2 text-green-600">
                 <span>●</span> <span className="text-text">Everything in Monthly</span>
               </li>
-              <li className="flex items-center gap-2 text-purple-600 font-semibold">
+              <li className="flex items-center gap-2 text-primary font-semibold">
                 <span>*</span> <span className="text-text">2 months free</span>
               </li>
-              <li className="flex items-center gap-2 text-purple-600 font-semibold">
+              <li className="flex items-center gap-2 text-primary font-semibold">
                 <span>*</span> <span className="text-text">Exclusive webinars</span>
               </li>
-              <li className="flex items-center gap-2 text-purple-600 font-semibold">
+              <li className="flex items-center gap-2 text-primary font-semibold">
                 <span>*</span> <span className="text-text">1-on-1 consultation</span>
               </li>
             </ul>
@@ -150,7 +150,7 @@ function PremiumFeatures() {
       </div>
 
       {/* What Premium Adds Section */}
-      <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-8 mb-8">
+      <div className="bg-brand rounded-xl p-8 mb-8">
         <h2 className="text-2xl font-bold text-text mb-4"> What Premium Adds to Your Experience</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex gap-3">
@@ -186,10 +186,10 @@ function PremiumFeatures() {
 
       {/* Payment Section */}
       {showPayment && (
-        <div id="payment-section" className="bg-white rounded-xl shadow-card border-2 border-purple-400 p-8 mb-8 animate-fade-in">
+        <div id="payment-section" className="bg-white rounded-xl shadow-card border-2 border-primary p-8 mb-8 animate-fade-in">
           <h2 className="text-2xl font-bold text-text mb-2">Complete Your Subscription</h2>
           <p className="text-text-muted mb-6">
-            You're subscribing to the <span className="font-bold text-purple-600">{selectedPlan === 'monthly' ? 'Monthly Premium (1,399 ETB/month)' : 'Yearly Premium (13,990 ETB/year)'}</span> plan
+            You're subscribing to the <span className="font-bold text-primary">{selectedPlan === 'monthly' ? 'Monthly Premium (1,399 ETB/month)' : 'Yearly Premium (13,990 ETB/year)'}</span> plan
           </p>
 
           <form onSubmit={handleSubmitPayment} className="max-w-2xl mx-auto">
@@ -201,7 +201,7 @@ function PremiumFeatures() {
                   name="cardName"
                   value={paymentDetails.cardName}
                   onChange={handlePaymentChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="Abebe Kebede"
                   required
                 />
@@ -214,7 +214,7 @@ function PremiumFeatures() {
                   name="cardNumber"
                   value={paymentDetails.cardNumber}
                   onChange={handlePaymentChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                   placeholder="4242 4242 4242 4242"
                   maxLength="19"
                   required
@@ -229,7 +229,7 @@ function PremiumFeatures() {
                     name="expiryDate"
                     value={paymentDetails.expiryDate}
                     onChange={handlePaymentChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="MM/YY"
                     maxLength="5"
                     required
@@ -242,7 +242,7 @@ function PremiumFeatures() {
                     name="cvv"
                     value={paymentDetails.cvv}
                     onChange={handlePaymentChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="123"
                     maxLength="3"
                     required
@@ -263,7 +263,7 @@ function PremiumFeatures() {
               <div className="flex gap-4 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-purple-600 to-purple-800 text-white py-3 rounded-lg font-bold hover:shadow-lg transition-all"
+                  className="flex-1 bg-gradient-to-r from-primary to-primary-hover text-white py-3 rounded-lg font-bold hover:shadow-lg transition-all"
                 >
                   Pay {selectedPlan === 'monthly' ? '1,399 ETB' : '13,990 ETB'} & Get Premium Access
                 </button>
@@ -288,7 +288,7 @@ function PremiumFeatures() {
       <div className="text-center">
         <button 
           onClick={() => navigate('/investor')}
-          className="text-purple-600 hover:text-purple-800 font-medium"
+          className="text-primary hover:text-primary-hover font-medium"
         >
           ← Back to Dashboard
         </button>
