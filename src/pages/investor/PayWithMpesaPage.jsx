@@ -23,11 +23,11 @@ function getPhoneErrorMessage(value) {
   return ''
 }
 
-import React, { useState, useMemo } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import Modal from '../../components/ui/Modal'
 import { getBusinessesForInvestment } from '../../lib/applicationsData'
 import { recordInvestment } from '../../lib/investorStorage'
-import Modal from '../../components/ui/Modal'
 
 function PayWithMpesaPage() {
   const { id } = useParams()
@@ -60,14 +60,36 @@ function PayWithMpesaPage() {
     setShowConfirm(false)
   }
 
-  const handleConfirmPay = () => {
+  const handleConfirmPay = async () => {
     setShowConfirm(false)
     try {
-      recordInvestment(id, { amount })
+      // Call backend to initiate STK Push
+      const response = await fetch('/api/stk-push', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phoneNumber: receiverPhone,
+          amount: amount,
+          // Optional: passing more details if your backend supports them
+          accountReference: `Invest-${id}`,
+          transactionDesc: `Investment in ${businessName}`
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Payment initiation failed')
+      }
+
+      // Record locally for UI tracking
+      recordInvestment(id, { amount, checkoutRequestID: data.CheckoutRequestID })
       setPaySuccess(true)
     } catch (err) {
-      // still show success for UI flow
-      setPaySuccess(true)
+      console.error('Payment Error:', err)
+      alert(`Payment failed: ${err.message}`)
     }
   }
 

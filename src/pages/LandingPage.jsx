@@ -2,10 +2,9 @@
  * Landing Page — MELIKA. Women-led business platform: grant or investment.
  * Theme: MELIKA logo colors (#E85B84, #6C3D5A).
  */
-import React from 'react'
 import { Link } from 'react-router-dom'
 
-const HERO_IMAGE = '/melika-hero.png' // MELIKA mascot
+const HERO_IMAGE = '/hero.jpg' // MELIKA mascot
 const LOGO_URL = '/melika-logo.png'
 
 const IconDiscovery = () => (
@@ -67,7 +66,7 @@ function LandingPage() {
             <nav className="flex items-center gap-4 md:gap-6">
               <a href="#about" className="text-sm font-medium text-text-muted hover:text-primary transition-colors hidden sm:inline">About</a>
               <a href="#services" className="text-sm font-medium text-text-muted hover:text-primary transition-colors hidden sm:inline">Services</a>
-              <a href="#team" className="text-sm font-medium text-text-muted hover:text-primary transition-colors hidden sm:inline">Team</a>
+             
               <Link to="/auth" className="text-sm font-semibold text-primary hover:text-primary-hover transition-colors">Sign Up</Link>
             </nav>
           </div>
@@ -194,23 +193,7 @@ function LandingPage() {
           </div>
         </section>
 
-        <section id="team" className="py-16 md:py-24 bg-brand">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-text text-center mb-3">Built by Women in Tech</h2>
-            <p className="text-center text-text-muted mb-12">The people behind the platform.</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8">
-              {TEAM.map((member, i) => (
-                <div key={`${member.name}-${i}`} className="text-center p-6 rounded-2xl bg-white border border-brand-dark/30 shadow-card hover:shadow-card-hover transition-all">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 text-primary font-semibold text-lg">
-                    {member.name.charAt(0)}
-                  </div>
-                  <h3 className="font-semibold text-text">{member.name}</h3>
-                  <p className="text-sm text-text-muted mt-1">{member.role}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+       
 
         <section className="py-16 md:py-24 bg-primary">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

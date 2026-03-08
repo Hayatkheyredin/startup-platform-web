@@ -2,7 +2,7 @@
  * StartupCard - Card for business summaries with polished styling.
  * Uses uploaded category images (craftswomen, snacks, food, health) for investor business list.
  */
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // Category images (uploaded) – used for business list on investor dashboard
