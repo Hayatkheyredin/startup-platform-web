@@ -1,10 +1,18 @@
 /**
- * StartupCard - Card for business summaries with placeholder images and polished styling.
+ * StartupCard - Card for business summaries with polished styling.
+ * Uses uploaded category images (craftswomen, snacks, food, health) for investor business list.
  */
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-// Placeholder images: industry-specific Unsplash, or Picsum seeded by id for variety
+// Category images (uploaded) – used for business list on investor dashboard
+const CATEGORY_IMAGES = {
+  craftswomen: '/images/craftswomen.png',
+  snacks: '/images/snacks.png',
+  food: '/images/food.png',
+  health: '/images/health.png',
+}
+
 function getPlaceholderImage(id) {
   const seed = (id || '1').toString().replace(/\D/g, '') || '1'
   return `https://picsum.photos/seed/${seed}/400/240`
@@ -17,8 +25,27 @@ const INDUSTRY_IMAGES = {
   Education: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=240&fit=crop&q=80',
 }
 
-function getImageUrl(imageUrl, id, industry) {
+/** Derive category (craftswomen | snacks | food | health) from business so we show the right uploaded image. */
+function getCategoryForBusiness(industry, name, shortDescription) {
+  const n = (name || '').toLowerCase()
+  const d = (shortDescription || '').toLowerCase()
+  const combined = `${n} ${d}`
+
+  if (industry === 'Healthcare') {
+    if (/\b(snack|teff|crunchy)\b/.test(combined)) return 'snacks'
+    return 'health'
+  }
+  if (industry === 'Other' || /\b(craft|textile|handwoven|fabric|fashion|weav)\b/.test(combined)) return 'craftswomen'
+  if (industry === 'Sustainability' && /\b(tukul|housing|material|craft|textile)\b/.test(combined)) return 'craftswomen'
+  if (/\b(meal|food|hidar|restaurant|catering|recipe)\b/.test(combined)) return 'food'
+
+  return null
+}
+
+function getImageUrl(imageUrl, id, industry, name, shortDescription) {
   if (imageUrl) return imageUrl
+  const category = getCategoryForBusiness(industry, name, shortDescription)
+  if (category && CATEGORY_IMAGES[category]) return CATEGORY_IMAGES[category]
   return INDUSTRY_IMAGES[industry] || getPlaceholderImage(id)
 }
 
@@ -41,7 +68,7 @@ function StartupCard({ startup, showInvestButton = true, linkPrefix = '/investor
     : (() => { const n = parseInt(String(id).replace(/\D/g, '1'), 10); return Math.min(95, Math.max(12, (n * 17 + 35) % 85)); })()
 
   const [imgError, setImgError] = useState(false)
-  const placeholderUrl = getImageUrl(null, id, industry)
+  const placeholderUrl = getImageUrl(null, id, industry, name, shortDescription)
   const resolvedImageUrl = imageUrl || (imgError ? null : placeholderUrl)
 
   return (

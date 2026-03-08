@@ -4,6 +4,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { logout as clearUser } from '../../lib/authStorage'
+import { logoutExpert } from '../../lib/expertStorage'
 
 const LOGO_URL = '/melika-logo.png'
 
@@ -15,6 +16,7 @@ function Navbar({ role = 'investor' }) {
     localStorage.removeItem('authToken')
     localStorage.removeItem('userRole')
     clearUser()
+    if (role === 'expert') logoutExpert()
     navigate('/')
   }
 
@@ -30,6 +32,11 @@ function Navbar({ role = 'investor' }) {
     { to: '/admin/analytics', label: 'Analytics' },
   ]
 
+  const expertLinks = [
+    { to: '/expert', label: 'Dashboard' },
+    { to: '/expert/applications', label: 'Applications' },
+  ]
+
   const userLinksBase = [
     { to: '/user', label: 'Dashboard' },
     { to: '/user/profile', label: 'Profile' },
@@ -41,9 +48,10 @@ function Navbar({ role = 'investor' }) {
 
   const links =
     role === 'admin' ? adminLinks
+    : role === 'expert' ? expertLinks
     : role === 'user' ? userLinks
     : investorLinks
-  const homePath = role === 'admin' ? '/admin' : role === 'user' ? '/user' : '/investor'
+  const homePath = role === 'admin' ? '/admin' : role === 'expert' ? '/expert' : role === 'user' ? '/user' : '/investor'
 
   return (
     <header className="bg-white border-b border-brand-dark/30 sticky top-0 z-50 shadow-sm">

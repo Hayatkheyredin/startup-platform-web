@@ -1,79 +1,60 @@
 /**
- * StartupDetail - Full business view with team, idea, validation, investment options.
+ * StartupDetail - Full business view (same data as expert-approved list).
  */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { getStartupById, addToInterests, recordInvestment } from '../../services/api'
+import { addToInterests, recordInvestment } from '../../lib/investorStorage'
+import { getBusinessesForInvestment } from '../../lib/applicationsData'
 import Modal from '../../components/ui/Modal'
 
 function StartupDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const [startup, setStartup] = useState(null)
-  const [loading, setLoading] = useState(true)
   const [showInvestModal, setShowInvestModal] = useState(false)
   const [investAmount, setInvestAmount] = useState('')
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getStartupById(id)
-        setStartup(data)
-      } catch (err) {
-        setStartup(null)
-      } finally {
-        setLoading(false)
+  const businesses = useMemo(() => getBusinessesForInvestment(), [])
+  const fromList = businesses.find((b) => b.id === id)
+  const displayStartup = fromList
+    ? {
+        id: fromList.id,
+        name: fromList.name,
+        industry: fromList.industry,
+        stage: fromList.stage,
+        fundingNeeded: fromList.fundingNeeded || '$50K',
+        description: fromList.shortDescription || '',
+        teamMembers: fromList.founderName ? [{ name: fromList.founderName, role: 'Founder', email: fromList.founderEmail }] : [],
+        aiValidationReport: { score: 80, summary: 'Approved by experts for investment.', risks: [], recommendations: [] },
       }
-    }
-    fetchData()
-  }, [id])
+    : {
+        id,
+        name: 'Business',
+        industry: 'Other',
+        stage: 'Seed',
+        fundingNeeded: '$50K',
+        description: 'No description.',
+        teamMembers: [],
+        aiValidationReport: null,
+      }
 
-  const mockStartup = {
-    id,
-    name: 'TechFlow Solutions',
-    industry: 'Technology',
-    stage: 'Seed',
-    fundingNeeded: '$50,000',
-    description: 'AI-powered workflow automation for small and medium enterprises. Our platform reduces manual tasks by 60% and integrates with existing tools.',
-    teamMembers: [
-      { name: 'Jane Doe', role: 'CEO & Founder', email: 'jane@techflow.com' },
-      { name: 'Sarah Smith', role: 'CTO', email: 'sarah@techflow.com' },
-    ],
-    aiValidationReport: {
-      score: 85,
-      summary: 'Strong market fit, validated problem. Team has relevant experience.',
-      risks: ['Competition from established players', 'Regulatory considerations'],
-      recommendations: ['Focus on niche vertical first', 'Build partnerships'],
-    },
-  }
-
-  const displayStartup = startup || mockStartup
-
-  const handleAddToInterests = async () => {
+  const handleAddToInterests = () => {
     try {
-      await addToInterests(id)
+      addToInterests(id)
       alert('Added to your interests!')
     } catch (err) {
       alert(err.message || 'Failed to add')
     }
   }
 
-  const handleRecordInvestment = async () => {
+  const handleRecordInvestment = () => {
     try {
-      await recordInvestment(id, { amount: investAmount })
+      recordInvestment(id, { amount: investAmount })
       setShowInvestModal(false)
+      setInvestAmount('')
       alert('Investment recorded!')
     } catch (err) {
       alert(err.message || 'Failed to record')
     }
-  }
-
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16">
-        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    )
   }
 
   return (

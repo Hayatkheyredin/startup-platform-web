@@ -10,6 +10,7 @@ import { MOCK_TEAMS } from '../../data/teams'
 import { delay, SAVE_DELAY_MS, SHORT_DELAY_MS } from '../../lib/delay'
 
 const defaultProfile = {
+  nationalId: '',
   businessName: '',
   description: '',
   industry: '',
@@ -93,6 +94,22 @@ function UserProfile() {
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-5">
+        <div>
+          <label htmlFor="nationalId" className="block text-sm font-medium text-text mb-1.5">
+            National ID <span className="text-primary">*</span>
+          </label>
+          <input
+            id="nationalId"
+            type="text"
+            placeholder="Your national ID number"
+            value={profile.nationalId}
+            onChange={(e) => handleChange('nationalId', e.target.value)}
+            required
+            className="w-full px-4 py-2.5 rounded-lg border border-slate-200 bg-white text-text placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
+          />
+          <p className="mt-1 text-xs text-text-muted">Required to verify you are a woman. Kept confidential and used only for eligibility.</p>
+        </div>
+
         <div>
           <label htmlFor="businessName" className="block text-sm font-medium text-text mb-1.5">
             Business name or title

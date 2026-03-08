@@ -1,14 +1,13 @@
 /**
- * StartupList - List all validated businesses (selected for investment) with filters.
+ * StartupList - List businesses selected for investment.
+ * Same data source as InvestorDashboard: getBusinessesForInvestment() from applicationsData.js.
  */
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import StartupCard from '../../components/StartupCard'
-import { getStartups } from '../../services/api'
+import { getBusinessesForInvestment } from '../../lib/applicationsData'
 
 function StartupList() {
-  const [startups, setStartups] = useState([])
-  const [loading, setLoading] = useState(true)
   const [viewMode, setViewMode] = useState('cards')
   const [filters, setFilters] = useState({
     industry: '',
@@ -16,33 +15,13 @@ function StartupList() {
     stage: '',
   })
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getStartups(filters)
-        setStartups(data.startups || data || [])
-      } catch (err) {
-        setStartups([])
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [filters.industry, filters.fundingNeeded, filters.stage])
-
-  const mockStartups = [
-    { id: '1', name: 'TechFlow Solutions', industry: 'Technology', stage: 'Seed', fundingNeeded: '$50K', shortDescription: 'AI-powered workflow automation.' },
-    { id: '2', name: 'GreenEats', industry: 'Sustainability', stage: 'Early Stage', fundingNeeded: '$100K', shortDescription: 'Plant-based meal kits.' },
-    { id: '3', name: 'HealthBridge', industry: 'Healthcare', stage: 'Series A', fundingNeeded: '$250K', shortDescription: 'Telehealth platform.' },
-    { id: '4', name: 'EduLearn', industry: 'Education', stage: 'Seed', fundingNeeded: '$75K', shortDescription: 'Personalized learning app.' },
-  ]
-
-  const displayStartups = startups.length > 0 ? startups : mockStartups
+  const displayStartups = getBusinessesForInvestment()
   const filteredStartups = displayStartups.filter((s) => {
     if (filters.industry && s.industry !== filters.industry) return false
     if (filters.stage && s.stage !== filters.stage) return false
     return true
   })
+  const loading = false
 
   return (
     <div>

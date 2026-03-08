@@ -2,15 +2,29 @@
  * User Status - Application status: Pending, Approved, or Rejected.
  */
 import React from 'react'
-import { getCurrentUser } from '../../lib/authStorage'
+import { getCurrentUser, getStoredUsers } from '../../lib/authStorage'
 
 const statusConfig = {
   pending: {
     label: 'Pending',
-    description: 'Your application is under review. We’ll update you once it’s processed.',
+    description: 'Your application is under expert review. You will receive either a grant opportunity or an investment opportunity (one only).',
     icon: '⏳',
     bg: 'bg-amber-50 border-amber-200',
     text: 'text-amber-800',
+  },
+  approved_for_grant: {
+    label: 'Approved for grant',
+    description: 'Experts have selected you for a grant opportunity. You will be contacted with next steps.',
+    icon: '✓',
+    bg: 'bg-green-50 border-green-200',
+    text: 'text-green-800',
+  },
+  approved_for_investment: {
+    label: 'Approved for investment',
+    description: 'Your business has been selected for investment and is visible to investors. They can browse and invest in your business.',
+    icon: '✓',
+    bg: 'bg-green-50 border-green-200',
+    text: 'text-green-800',
   },
   approved: {
     label: 'Approved',
@@ -29,8 +43,10 @@ const statusConfig = {
 }
 
 function UserStatus() {
-  const user = getCurrentUser()
-  const status = (user?.status || 'pending').toLowerCase()
+  const current = getCurrentUser()
+  const stored = current ? getStoredUsers().find((u) => (u.email || '').toLowerCase() === (current.email || '').toLowerCase()) : null
+  const user = stored || current
+  const status = (user?.status || 'pending').toLowerCase().replace(/-/g, '_')
   const config = statusConfig[status] || statusConfig.pending
 
   return (

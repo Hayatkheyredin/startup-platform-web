@@ -247,6 +247,7 @@ function LandingPage() {
                 <a href="#about" className="text-sm text-text-muted hover:text-primary transition-colors">About</a>
                 <a href="#team" className="text-sm text-text-muted hover:text-primary transition-colors">Team</a>
                 <a href="#services" className="text-sm text-text-muted hover:text-primary transition-colors">Services</a>
+                <Link to="/expert/login" className="text-sm text-text-muted hover:text-primary transition-colors">Expert login</Link>
               </nav>
             </div>
             <div className="flex items-center gap-4">

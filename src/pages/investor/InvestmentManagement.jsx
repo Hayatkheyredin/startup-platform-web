@@ -1,11 +1,13 @@
 /**
  * InvestmentManagement - Track businesses investor is interested in or has invested in.
+ * Data from investorStorage (localStorage) and getBusinessesForInvestment() for details.
  */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import StartupCard from '../../components/StartupCard'
 import EmptyState from '../../components/ui/EmptyState'
-import { getInvestorInvestments } from '../../services/api'
+import { getInterests, getInvestments } from '../../lib/investorStorage'
+import { getBusinessesForInvestment } from '../../lib/applicationsData'
 
 function HeartIcon({ className }) {
   return (
@@ -24,34 +26,27 @@ function WalletIcon({ className }) {
 }
 
 function InvestmentManagement() {
-  const [data, setData] = useState({ interested: [], invested: [] })
-  const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('interested')
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getInvestorInvestments()
-        setData(res)
-      } catch (err) {
-        setData({ interested: [], invested: [] })
-      } finally {
-        setLoading(false)
-      }
+  const businesses = useMemo(() => getBusinessesForInvestment(), [])
+  const interestIds = getInterests()
+  const investmentRows = getInvestments()
+
+  const interested = interestIds
+    .map((bid) => businesses.find((b) => b.id === bid))
+    .filter(Boolean)
+    .map((b) => ({ id: b.id, name: b.name, industry: b.industry, stage: b.stage, fundingNeeded: b.fundingNeeded || '$50K', shortDescription: b.shortDescription || '' }))
+
+  const invested = investmentRows.map((row) => {
+    const b = businesses.find((x) => x.id === row.businessId)
+    return {
+      id: row.businessId,
+      name: b ? b.name : row.businessId,
+      industry: b ? b.industry : '—',
+      investedAmount: row.investedAmount || 'N/A',
+      date: row.date || 'N/A',
     }
-    fetchData()
-  }, [])
-
-  const mockInterested = [
-    { id: '1', name: 'TechFlow Solutions', industry: 'Technology', stage: 'Seed', fundingNeeded: '$50K', shortDescription: 'AI workflow automation.' },
-    { id: '2', name: 'GreenEats', industry: 'Sustainability', stage: 'Early Stage', fundingNeeded: '$100K', shortDescription: 'Plant-based meal kits.' },
-  ]
-  const mockInvested = [
-    { id: '3', name: 'HealthBridge', industry: 'Healthcare', stage: 'Series A', fundingNeeded: '$250K', shortDescription: 'Telehealth platform.', investedAmount: '$25,000', date: '2024-01-15' },
-  ]
-
-  const interested = (data.interested || []).length > 0 ? data.interested : mockInterested
-  const invested = (data.invested || []).length > 0 ? data.invested : mockInvested
+  })
 
   return (
     <div>
@@ -60,11 +55,7 @@ function InvestmentManagement() {
         <p className="text-text-muted text-sm mt-0.5">Track your interests and investments</p>
       </div>
 
-      {loading ? (
-        <div className="flex flex-col items-center justify-center py-16">
-          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-        </div>
-      ) : (
+      (
         <>
           <div className="flex gap-1 p-1 bg-slate-100 rounded-lg w-fit mb-6">
             <button
@@ -163,7 +154,7 @@ function InvestmentManagement() {
             )
           )}
         </>
-      )}
+      )
     </div>
   )
 }

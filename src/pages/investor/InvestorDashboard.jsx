@@ -1,7 +1,8 @@
 /**
  * InvestorDashboard - Overview with stats, charts, and businesses selected for investment.
+ * Data: getBusinessesForInvestment() from applicationsData.js (same as expert "allowed for investors" list).
  */
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   LineChart,
@@ -18,10 +19,9 @@ import {
   Bar,
 } from 'recharts'
 import StartupCard from '../../components/StartupCard'
-import { getStartups } from '../../services/api'
+import { getBusinessesForInvestment } from '../../lib/applicationsData'
 
-const STATS = [
-  { label: 'Total Businesses', value: '42', sub: 'For investment', color: 'bg-primary' },
+const STATS_OTHER = [
   { label: 'Active Investors', value: '128', sub: 'This month', color: 'bg-primary' },
   { label: 'Total Funding Raised', value: '$1.2M', sub: 'All time', color: 'bg-primary' },
   { label: 'Investments Made', value: '86', sub: 'Deals closed', color: 'bg-primary' },
@@ -67,31 +67,14 @@ const RECENT_ACTIVITY = [
 ]
 
 function InvestorDashboard() {
-  const [startups, setStartups] = useState([])
-  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getStartups()
-        setStartups(data.startups || data || [])
-      } catch (err) {
-        setStartups([])
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [])
-
-  const displayStartups = startups.length > 0 ? startups : [
-    { id: '1', name: 'TechFlow Solutions', industry: 'Technology', stage: 'Seed', fundingNeeded: '$50K', shortDescription: 'AI-powered workflow automation for SMEs.', fundingProgress: 72 },
-    { id: '2', name: 'GreenEats', industry: 'Sustainability', stage: 'Early Stage', fundingNeeded: '$100K', shortDescription: 'Plant-based meal kits with zero waste packaging.', fundingProgress: 45 },
-    { id: '3', name: 'HealthBridge', industry: 'Healthcare', stage: 'Series A', fundingNeeded: '$250K', shortDescription: 'Telehealth platform connecting patients with specialists.', fundingProgress: 88 },
-  ]
-
+  const displayStartups = getBusinessesForInvestment()
   const trendingStartups = [...displayStartups].slice(0, 4)
+  const loading = false
+  const STATS = [
+    { label: 'Total Businesses', value: String(displayStartups.length), sub: 'For investment', color: 'bg-primary' },
+    ...STATS_OTHER,
+  ]
 
   return (
     <div className="animate-fade-in space-y-8">

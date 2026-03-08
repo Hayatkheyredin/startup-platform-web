@@ -19,6 +19,11 @@ function Sidebar({ role = 'investor' }) {
     { to: '/admin/analytics', label: 'Platform Analytics', icon: ChartIcon },
   ]
 
+  const expertItems = [
+    { to: '/expert', label: 'Dashboard', icon: DashboardIcon },
+    { to: '/expert/applications', label: 'Applications', icon: ListIcon },
+  ]
+
   const userItemsBase = [
     { to: '/user', label: 'Dashboard', icon: DashboardIcon },
     { to: '/user/profile', label: 'Profile', icon: ProfileIcon },
@@ -30,6 +35,7 @@ function Sidebar({ role = 'investor' }) {
 
   const items =
     role === 'admin' ? adminItems
+    : role === 'expert' ? expertItems
     : role === 'user' ? userItems
     : investorItems
 
@@ -39,7 +45,8 @@ function Sidebar({ role = 'investor' }) {
         {items.map((item) => {
           const isActive =
             location.pathname === item.to ||
-            (role !== 'user' && item.to !== '/user' && location.pathname.startsWith(item.to))
+            (role !== 'user' && role !== 'expert' && item.to !== '/user' && location.pathname.startsWith(item.to)) ||
+            (role === 'expert' && (location.pathname === item.to || location.pathname.startsWith(item.to)))
           const Icon = item.icon
           return (
             <Link

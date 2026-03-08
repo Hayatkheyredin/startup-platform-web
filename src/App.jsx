@@ -7,6 +7,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import MainLayout from './components/layout/MainLayout'
 import AdminGuard from './components/AdminGuard'
 import UserGuard from './components/UserGuard'
+import ExpertGuard from './components/ExpertGuard'
 
 // Landing
 import LandingPage from './pages/LandingPage'
@@ -31,6 +32,11 @@ import PremiumFeatures from './pages/investor/PremiumFeatures'
 // Company / Granter placeholders
 import CompanyPlaceholder from './pages/CompanyPlaceholder'
 import GranterPlaceholder from './pages/GranterPlaceholder'
+
+// Expert (anonymous accounts; email/password assigned by platform)
+import ExpertLoginPage from './pages/expert/ExpertLoginPage'
+import ExpertDashboard from './pages/expert/ExpertDashboard'
+import ExpertApplications from './pages/expert/ExpertApplications'
 
 // Admin
 import AdminLoginPage from './pages/admin/AdminLoginPage'
@@ -61,6 +67,20 @@ function App() {
         <Route path="status" element={<UserStatus />} />
         <Route path="team" element={<UserTeam />} />
         <Route path="chat" element={<UserChat />} />
+      </Route>
+
+      {/* Expert: login then protected dashboard (assigned email/password) */}
+      <Route path="/expert/login" element={<ExpertLoginPage />} />
+      <Route
+        path="/expert"
+        element={
+          <ExpertGuard>
+            <MainLayout role="expert" />
+          </ExpertGuard>
+        }
+      >
+        <Route index element={<ExpertDashboard />} />
+        <Route path="applications" element={<ExpertApplications />} />
       </Route>
 
       {/* Admin: login then protected dashboard */}
