@@ -27,6 +27,7 @@ import InvestorDashboard from './pages/investor/InvestorDashboard'
 import StartupList from './pages/investor/StartupList'
 import StartupDetail from './pages/investor/StartupDetail'
 import InvestmentManagement from './pages/investor/InvestmentManagement'
+import PayWithMpesaPage from './pages/investor/PayWithMpesaPage'
 import PremiumFeatures from './pages/investor/PremiumFeatures'
 
 // Company / Granter placeholders
@@ -104,6 +105,7 @@ function App() {
         <Route index element={<InvestorDashboard />} />
         <Route path="businesses" element={<StartupList />} />
         <Route path="businesses/:id" element={<StartupDetail />} />
+        <Route path="businesses/:id/pay/mpesa" element={<PayWithMpesaPage />} />
         <Route path="investments" element={<InvestmentManagement />} />
         <Route path="premium" element={<PremiumFeatures />} />
       </Route>

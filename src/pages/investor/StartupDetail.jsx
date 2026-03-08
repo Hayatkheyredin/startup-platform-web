@@ -3,7 +3,7 @@
  */
 import React, { useState, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { addToInterests, recordInvestment } from '../../lib/investorStorage'
+import { addToInterests } from '../../lib/investorStorage'
 import { getBusinessesForInvestment } from '../../lib/applicationsData'
 import Modal from '../../components/ui/Modal'
 
@@ -11,7 +11,7 @@ function StartupDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [showInvestModal, setShowInvestModal] = useState(false)
-  const [investAmount, setInvestAmount] = useState('')
+  const [showChapaUnavailable, setShowChapaUnavailable] = useState(false)
 
   const businesses = useMemo(() => getBusinessesForInvestment(), [])
   const fromList = businesses.find((b) => b.id === id)
@@ -46,15 +46,13 @@ function StartupDetail() {
     }
   }
 
-  const handleRecordInvestment = () => {
-    try {
-      recordInvestment(id, { amount: investAmount })
-      setShowInvestModal(false)
-      setInvestAmount('')
-      alert('Investment recorded!')
-    } catch (err) {
-      alert(err.message || 'Failed to record')
-    }
+  const handleChooseMpesa = () => {
+    setShowInvestModal(false)
+    navigate(`/investor/businesses/${id}/pay/mpesa`)
+  }
+
+  const handleChooseChapa = () => {
+    setShowChapaUnavailable(true)
   }
 
   return (
@@ -155,34 +153,42 @@ function StartupDetail() {
       <Modal
         show={showInvestModal}
         onHide={() => setShowInvestModal(false)}
-        title="Record Investment"
+        title="Record Investment — Choose payment method"
+      >
+        <p className="text-sm text-text-muted mb-4">Select how you want to pay for this investment.</p>
+        <div className="flex flex-col gap-3">
+          <button
+            type="button"
+            onClick={handleChooseMpesa}
+            className="w-full px-4 py-3 rounded-xl border-2 border-primary bg-primary/5 text-primary font-semibold hover:bg-primary/10 transition-colors flex items-center justify-center gap-2"
+          >
+            <span className="text-lg">📱</span> Pay with M-Pesa
+          </button>
+          <button
+            type="button"
+            onClick={handleChooseChapa}
+            className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 bg-slate-50 text-text font-medium hover:bg-slate-100 transition-colors flex items-center justify-center gap-2"
+          >
+            Pay with Chapa
+          </button>
+        </div>
+      </Modal>
+
+      <Modal
+        show={showChapaUnavailable}
+        onHide={() => setShowChapaUnavailable(false)}
+        title="Chapa"
         footer={
-          <>
-            <button
-              type="button"
-              onClick={() => setShowInvestModal(false)}
-              className="px-4 py-2 rounded-btn text-sm font-medium bg-slate-100 text-text hover:bg-slate-200 transition-smooth"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleRecordInvestment}
-              className="px-4 py-2 rounded-btn text-sm font-medium bg-primary text-white hover:bg-primary-hover transition-smooth"
-            >
-              Confirm
-            </button>
-          </>
+          <button
+            type="button"
+            onClick={() => setShowChapaUnavailable(false)}
+            className="px-4 py-2 rounded-btn text-sm font-medium bg-primary text-white hover:bg-primary-hover"
+          >
+            OK
+          </button>
         }
       >
-        <label className="block text-sm font-medium text-text mb-1.5">Amount ($)</label>
-        <input
-          type="number"
-          placeholder="e.g. 10000"
-          value={investAmount}
-          onChange={(e) => setInvestAmount(e.target.value)}
-          className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
-        />
+        <p className="text-text">Chapa is not available at the moment. Please use M-Pesa to complete your payment.</p>
       </Modal>
     </div>
   )
