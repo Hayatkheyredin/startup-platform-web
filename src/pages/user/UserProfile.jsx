@@ -1,8 +1,13 @@
 /**
  * User Profile - Business name/title, description, and all required fields.
+ * On Save: persist profile, call Gemini for team suggestions, show Skip/Accept modal.
  */
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { getCurrentUser, updateCurrentUser } from '../../lib/authStorage'
+import { getTeamSuggestions } from '../../services/gemini'
+import { MOCK_TEAMS } from '../../data/teams'
+import { delay, SAVE_DELAY_MS, SHORT_DELAY_MS } from '../../lib/delay'
 
 const defaultProfile = {
   businessName: '',
@@ -15,10 +20,14 @@ const defaultProfile = {
 }
 
 function UserProfile() {
+  const navigate = useNavigate()
   const user = getCurrentUser()
   const [profile, setProfile] = useState(defaultProfile)
   const [saved, setSaved] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [aiLoading, setAiLoading] = useState(false)
+  const [suggestedTeamIds, setSuggestedTeamIds] = useState(null)
+  const [aiError, setAiError] = useState(null)
 
   useEffect(() => {
     if (user?.profile && typeof user.profile === 'object') {
@@ -33,23 +42,54 @@ function UserProfile() {
     setSaved(false)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
+    setAiError(null)
+    setSuggestedTeamIds(null)
     try {
-      updateCurrentUser({ profile })
+      await delay(SAVE_DELAY_MS)
+      updateCurrentUser({ profile, hasCompletedProfile: true })
       setSaved(true)
       setLoading(false)
-    } catch {
+
+      setAiLoading(true)
+      const ids = await getTeamSuggestions(profile, MOCK_TEAMS)
+      setAiLoading(false)
+      if (ids && ids.length > 0) {
+        setSuggestedTeamIds(ids)
+      }
+    } catch (err) {
       setLoading(false)
+      setAiLoading(false)
+      setAiError(err.message || 'Could not get AI suggestions.')
+      setSaved(true)
     }
   }
+
+  const handleSkip = () => {
+    setSuggestedTeamIds(null)
+    setAiError(null)
+  }
+
+  const handleAccept = async () => {
+    if (suggestedTeamIds && suggestedTeamIds.length > 0) {
+      updateCurrentUser({ recommendedTeamIds: suggestedTeamIds })
+      setSuggestedTeamIds(null)
+      await delay(SHORT_DELAY_MS)
+      navigate('/user/team')
+    }
+  }
+
+  const suggestedTeams = suggestedTeamIds
+    ? MOCK_TEAMS.filter((t) => suggestedTeamIds.includes(t.id))
+    : []
 
   return (
     <div className="max-w-2xl">
       <h1 className="text-2xl md:text-3xl font-bold text-text mb-2">Profile</h1>
       <p className="text-text-muted mb-6">
-        Tell us about your business. Experts will review your application; you will then be considered for either a grant or an investment opportunity (one only).
+        Tell us about your business. Save your profile to get AI-powered team suggestions, then join a team and chat with teammates.
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -164,16 +204,61 @@ function UserProfile() {
         <div className="flex items-center gap-3">
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || aiLoading}
             className="px-6 py-2.5 rounded-xl font-medium bg-primary text-white hover:bg-primary-hover transition-colors disabled:opacity-60"
           >
-            {loading ? 'Saving...' : 'Save profile'}
+            {loading ? 'Saving...' : aiLoading ? 'Getting suggestions...' : 'Save profile'}
           </button>
-          {saved && (
+          {saved && !aiLoading && !suggestedTeamIds && (
             <span className="text-sm text-primary font-medium">Saved.</span>
           )}
         </div>
       </form>
+
+      {aiError && (
+        <div className="mt-4 p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-sm">
+          {aiError} You can still browse teams manually.
+        </div>
+      )}
+
+      {/* AI suggestion modal */}
+      {suggestedTeamIds && suggestedTeams.length > 0 && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40" onClick={handleSkip}>
+          <div
+            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 border border-brand-dark/30"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-xl font-bold text-text mb-2">Suggested teams for you</h2>
+            <p className="text-sm text-text-muted mb-4">
+              Based on your profile, we recommend these teams (up to 3). Accept to see them in &quot;Recommended for you&quot; on the team page, or skip to browse all teams.
+            </p>
+            <ul className="space-y-2 mb-6">
+              {suggestedTeams.map((t) => (
+                <li key={t.id} className="flex items-center gap-2 py-2 border-b border-brand-dark/10 last:border-0">
+                  <span className="font-medium text-text">{t.name}</span>
+                  <span className="text-xs text-text-muted">— {t.tagline}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={handleSkip}
+                className="flex-1 py-2.5 rounded-xl font-medium border border-brand-dark/30 text-text hover:bg-brand/50 transition-colors"
+              >
+                Skip
+              </button>
+              <button
+                type="button"
+                onClick={handleAccept}
+                className="flex-1 py-2.5 rounded-xl font-medium bg-primary text-white hover:bg-primary-hover transition-colors"
+              >
+                Accept
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

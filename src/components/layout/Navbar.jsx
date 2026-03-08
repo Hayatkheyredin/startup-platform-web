@@ -3,7 +3,7 @@
  */
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { logout as clearUser, getCurrentUser } from '../../lib/authStorage'
+import { logout as clearUser } from '../../lib/authStorage'
 
 const LOGO_URL = '/melika-logo.png'
 
@@ -30,19 +30,14 @@ function Navbar({ role = 'investor' }) {
     { to: '/admin/analytics', label: 'Analytics' },
   ]
 
-  const currentUser = role === 'user' ? getCurrentUser() : null
   const userLinksBase = [
     { to: '/user', label: 'Dashboard' },
     { to: '/user/profile', label: 'Profile' },
     { to: '/user/status', label: 'Status' },
+    { to: '/user/team', label: 'Team' },
+    { to: '/user/chat', label: 'Live Chat' },
   ]
-  const userLinksExtra = currentUser?.needTeam
-    ? [
-        { to: '/user/team', label: 'Team' },
-        { to: '/user/chat', label: 'Live Chat' },
-      ]
-    : []
-  const userLinks = [...userLinksBase, ...userLinksExtra]
+  const userLinks = userLinksBase
 
   const links =
     role === 'admin' ? adminLinks

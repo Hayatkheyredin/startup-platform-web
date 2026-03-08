@@ -3,12 +3,9 @@
  */
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { getCurrentUser } from '../../lib/authStorage'
 
 function Sidebar({ role = 'investor' }) {
   const location = useLocation()
-  const currentUser = role === 'user' ? getCurrentUser() : null
-  const needTeam = currentUser?.needTeam === true
 
   const investorItems = [
     { to: '/investor', label: 'Dashboard', icon: DashboardIcon },
@@ -26,14 +23,10 @@ function Sidebar({ role = 'investor' }) {
     { to: '/user', label: 'Dashboard', icon: DashboardIcon },
     { to: '/user/profile', label: 'Profile', icon: ProfileIcon },
     { to: '/user/status', label: 'Status', icon: StatusIcon },
+    { to: '/user/team', label: 'Team', icon: UsersIcon },
+    { to: '/user/chat', label: 'Live Chat', icon: ChatIcon },
   ]
-  const userItemsTeam = needTeam
-    ? [
-        { to: '/user/team', label: 'Team', icon: UsersIcon },
-        { to: '/user/chat', label: 'Live Chat', icon: ChatIcon },
-      ]
-    : []
-  const userItems = [...userItemsBase, ...userItemsTeam]
+  const userItems = userItemsBase
 
   const items =
     role === 'admin' ? adminItems

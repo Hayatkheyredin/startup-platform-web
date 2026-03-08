@@ -9,6 +9,7 @@ import {
   setCurrentUser,
   logout,
 } from '../lib/authStorage'
+import { delay, AUTH_DELAY_MS } from '../lib/delay'
 
 const LOGO_URL = '/melika-logo.png'
 
@@ -34,7 +35,7 @@ function AuthPage() {
   // Investor-only
   const [investorType, setInvestorType] = useState(null) // 'company' | 'personal'
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault()
     setError('')
 
@@ -81,6 +82,7 @@ function AuthPage() {
 
     setLoading(true)
     try {
+      await delay(AUTH_DELAY_MS)
       const existing = findUserByEmail(email)
       if (existing) {
         setError('An account with this email already exists. Please log in.')
@@ -116,7 +118,7 @@ function AuthPage() {
     }
   }
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
     setError('')
     if (!email.trim() || !password) {
@@ -126,6 +128,7 @@ function AuthPage() {
     }
     setLoading(true)
     try {
+      await delay(AUTH_DELAY_MS)
       const user = findUserByEmail(email)
       if (!user || user.password !== password) {
         setError('Invalid email or password.')

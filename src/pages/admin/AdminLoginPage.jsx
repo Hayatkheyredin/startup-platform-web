@@ -4,6 +4,7 @@
 import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { login, forgotPassword } from '../../services/api'
+import { delay, AUTH_DELAY_MS } from '../../lib/delay'
 
 function AdminLoginPage() {
   const navigate = useNavigate()
@@ -20,6 +21,7 @@ function AdminLoginPage() {
     setError('')
     setLoading(true)
     try {
+      await delay(AUTH_DELAY_MS)
       const res = await login(email, password)
       localStorage.setItem('authToken', res.token)
       localStorage.setItem('userRole', 'admin')
