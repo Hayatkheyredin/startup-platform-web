@@ -1,5 +1,5 @@
 /**
- * API Service - Centralized API calls for the Women Startup Platform.
+ * API Service - Centralized API calls for MELIKA (women-led business platform: grant or investment).
  * Contains placeholder URLs - replace with actual backend endpoints when ready.
  */
 
@@ -59,7 +59,7 @@ export async function forgotPassword(email) {
 // ============ STARTUP API ============
 
 /**
- * Get all validated startups (for Investor Dashboard)
+ * Get all validated businesses selected for investment (for Investor Dashboard)
  * @param {Object} filters - { industry, fundingNeeded, stage }
  */
 export async function getStartups(filters = {}) {
@@ -68,15 +68,15 @@ export async function getStartups(filters = {}) {
 }
 
 /**
- * Get single startup by ID (for Startup Detail page)
- * @param {string} id - Startup ID
+ * Get single business by ID (for Business Detail page)
+ * @param {string} id - Business ID
  */
 export async function getStartupById(id) {
   return fetchApi(`/startups/${id}`)
 }
 
 /**
- * Get startups for admin monitoring (all statuses)
+ * Get businesses for admin monitoring (all statuses)
  */
 export async function getStartupsForAdmin() {
   return fetchApi('/admin/startups')
@@ -85,15 +85,15 @@ export async function getStartupsForAdmin() {
 // ============ INVESTMENT API ============
 
 /**
- * Get investor's tracked/invested startups
+ * Get investor's tracked/invested businesses
  */
 export async function getInvestorInvestments() {
   return fetchApi('/investor/investments')
 }
 
 /**
- * Add startup to investor's interest list
- * @param {string} startupId - Startup ID
+ * Add business to investor's interest list
+ * @param {string} startupId - Business ID (API may still use startupId)
  */
 export async function addToInterests(startupId) {
   return fetchApi('/investor/interests', {
@@ -104,7 +104,7 @@ export async function addToInterests(startupId) {
 
 /**
  * Record investment
- * @param {string} startupId - Startup ID
+ * @param {string} startupId - Business ID (API may still use startupId)
  * @param {Object} investmentData - Amount, terms, etc.
  */
 export async function recordInvestment(startupId, investmentData) {

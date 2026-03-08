@@ -1,5 +1,5 @@
 /**
- * StartupList - List all validated startups with filters.
+ * StartupList - List all validated businesses (selected for investment) with filters.
  */
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -48,8 +48,8 @@ function StartupList() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-semibold text-text">Startup List</h1>
-          <p className="text-text-muted text-sm mt-0.5">All validated startups</p>
+          <h1 className="text-2xl font-semibold text-text">Business List</h1>
+          <p className="text-text-muted text-sm mt-0.5">Businesses selected for investment—browse and invest</p>
         </div>
         <select
           value={viewMode}
@@ -137,7 +137,7 @@ function StartupList() {
                   <td className="px-4 py-3 text-text-muted">{startup.fundingNeeded}</td>
                   <td className="px-4 py-3">
                     <Link
-                      to={`/investor/startups/${startup.id}`}
+                      to={`/investor/businesses/${startup.id}`}
                       className="text-primary font-medium hover:underline"
                     >
                       View

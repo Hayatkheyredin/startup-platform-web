@@ -1,8 +1,9 @@
 /**
- * Navbar - Top navigation. MELIKA theme #ff5bae.
+ * Navbar - Top navigation. MELIKA theme (vibrant pink #E85B84, plum #6C3D5A).
  */
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { logout as clearUser, getCurrentUser } from '../../lib/authStorage'
 
 const LOGO_URL = '/melika-logo.png'
 
@@ -13,30 +14,48 @@ function Navbar({ role = 'investor' }) {
   const handleLogout = () => {
     localStorage.removeItem('authToken')
     localStorage.removeItem('userRole')
-    navigate(role === 'admin' ? '/' : '/')
+    clearUser()
+    navigate('/')
   }
 
   const investorLinks = [
     { to: '/investor', label: 'Home' },
-    { to: '/investor/startups', label: 'Startups' },
+    { to: '/investor/businesses', label: 'Businesses' },
     { to: '/investor/investments', label: 'My Investments' },
   ]
 
   const adminLinks = [
     { to: '/admin/users', label: 'Users' },
-    { to: '/admin/startups', label: 'Startups' },
+    { to: '/admin/businesses', label: 'Businesses' },
     { to: '/admin/analytics', label: 'Analytics' },
   ]
 
-  const links = role === 'admin' ? adminLinks : investorLinks
-  const homePath = role === 'admin' ? '/admin' : '/investor'
+  const currentUser = role === 'user' ? getCurrentUser() : null
+  const userLinksBase = [
+    { to: '/user', label: 'Dashboard' },
+    { to: '/user/profile', label: 'Profile' },
+    { to: '/user/status', label: 'Status' },
+  ]
+  const userLinksExtra = currentUser?.needTeam
+    ? [
+        { to: '/user/team', label: 'Team' },
+        { to: '/user/chat', label: 'Live Chat' },
+      ]
+    : []
+  const userLinks = [...userLinksBase, ...userLinksExtra]
+
+  const links =
+    role === 'admin' ? adminLinks
+    : role === 'user' ? userLinks
+    : investorLinks
+  const homePath = role === 'admin' ? '/admin' : role === 'user' ? '/user' : '/investor'
 
   return (
     <header className="bg-white border-b border-brand-dark/30 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 md:h-16">
           <Link to={homePath} className="flex items-center gap-3 shrink-0 group">
-            <img src={LOGO_URL} alt="MELIKA" className="h-9 md:h-10 w-auto object-contain group-hover:opacity-90 transition-opacity" />
+            <img src={LOGO_URL} alt="MELIKA" className="h-14 md:h-16 w-auto object-contain group-hover:opacity-90 transition-opacity" />
             <span className="font-semibold text-text hidden sm:inline">MELIKA</span>
           </Link>
 

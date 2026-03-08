@@ -1,5 +1,5 @@
 /**
- * StartupDetail - Full startup view with team, idea, AI validation, investment options.
+ * StartupDetail - Full business view with team, idea, validation, investment options.
  */
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'

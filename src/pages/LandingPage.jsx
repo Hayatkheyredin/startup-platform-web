@@ -1,11 +1,11 @@
 /**
- * Landing Page — MELIKA. Women-led startup investment platform.
- * Theme: #ff5bae.
+ * Landing Page — MELIKA. Women-led business platform: grant or investment.
+ * Theme: MELIKA logo colors (#E85B84, #6C3D5A).
  */
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const HERO_IMAGE = 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80'
+const HERO_IMAGE = '/melika-hero.png' // MELIKA mascot
 const LOGO_URL = '/melika-logo.png'
 
 const IconDiscovery = () => (
@@ -59,7 +59,7 @@ function LandingPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             <Link to="/" className="flex items-center gap-3">
-              <img src={LOGO_URL} alt="MELIKA" className="h-10 md:h-12 w-auto object-contain" />
+              <img src={LOGO_URL} alt="MELIKA" className="h-16 md:h-20 w-auto object-contain" />
               <span className="text-lg md:text-xl font-bold text-text hidden sm:inline">
                 MELIKA
               </span>
@@ -68,8 +68,7 @@ function LandingPage() {
               <a href="#about" className="text-sm font-medium text-text-muted hover:text-primary transition-colors hidden sm:inline">About</a>
               <a href="#services" className="text-sm font-medium text-text-muted hover:text-primary transition-colors hidden sm:inline">Services</a>
               <a href="#team" className="text-sm font-medium text-text-muted hover:text-primary transition-colors hidden sm:inline">Team</a>
-              <Link to="/admin/login" className="text-sm font-semibold text-text hover:text-primary transition-colors">Admin</Link>
-              <Link to="/investor" className="text-sm font-semibold text-primary hover:text-primary-hover transition-colors">Investor</Link>
+              <Link to="/auth" className="text-sm font-semibold text-primary hover:text-primary-hover transition-colors">Sign Up</Link>
             </nav>
           </div>
         </div>
@@ -82,17 +81,17 @@ function LandingPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[80vh] lg:min-h-[85vh] py-16 lg:py-0">
               <div className="order-2 lg:order-1 text-center lg:text-left">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-text mb-6 leading-tight">
-                  Empowering <span className="text-primary">Women-Led</span> Startups
+                  Empowering <span className="text-primary">Women-Led</span> Businesses
                 </h1>
                 <p className="text-lg md:text-xl text-text-muted mb-10 max-w-xl mx-auto lg:mx-0">
-                  Connect with investors who believe in diversity. We help women founders get validated, funded, and scale—and help investors back the next generation of leaders.
+                  Register, fill your details, and get reviewed by experts. You receive either a grant or an investment opportunity. Investors discover and invest in businesses selected for investment.
                 </p>
                 <div className="flex flex-wrap justify-center lg:justify-start gap-4">
                   <Link
-                    to="/investor"
+                    to="/auth"
                     className="px-6 py-3.5 rounded-xl font-semibold bg-primary text-white hover:bg-primary-hover transition-colors shadow-sm"
                   >
-                    Explore Startups
+                    Sign Up
                   </Link>
                   <Link
                     to="/investor"
@@ -102,13 +101,12 @@ function LandingPage() {
                   </Link>
                 </div>
               </div>
-              <div className="order-1 lg:order-2 relative rounded-2xl overflow-hidden shadow-card-hover aspect-[4/3] lg:aspect-auto lg:min-h-[480px]">
+              <div className="order-1 lg:order-2 relative flex items-center justify-center rounded-2xl overflow-hidden bg-brand/50 border border-brand-dark/30 shadow-card-hover aspect-[4/3] lg:aspect-auto lg:min-h-[480px] p-8">
                 <img
                   src={HERO_IMAGE}
-                  alt="Team collaboration"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  alt="MELIKA – Empowering women-led businesses"
+                  className="w-full h-full max-h-[420px] lg:max-h-[520px] object-contain object-center"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
               </div>
             </div>
           </div>
@@ -122,7 +120,7 @@ function LandingPage() {
                 MELIKA exists to close the funding gap for women entrepreneurs. We believe great ideas deserve capital regardless of who pitches them.
               </p>
               <p className="text-lg text-text-muted leading-relaxed">
-                We empower women founders by connecting them with mission-driven investors, and we give investors a single place to discover, validate, and fund high-potential women-led ventures.
+                Users register and fill their business details. Experts judge each application; each applicant receives either a grant opportunity or an investment opportunity—one only. Businesses selected for investment are sent to investors, who browse and invest in the ones they choose.
               </p>
             </div>
           </div>
@@ -131,13 +129,13 @@ function LandingPage() {
         <section id="services" className="py-16 md:py-24 bg-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl md:text-4xl font-bold text-text text-center mb-4">Platform Features</h2>
-            <p className="text-center text-text-muted mb-12 max-w-xl mx-auto">Everything you need to discover, validate, and invest in women-led startups.</p>
+            <p className="text-center text-text-muted mb-12 max-w-xl mx-auto">Discover, validate, and invest in women-led businesses. Experts review; you get a grant or investment opportunity.</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {[
-                { Icon: IconDiscovery, title: 'Startup Discovery', desc: 'Browse vetted women-led startups in one place. Filter by sector, stage, and impact.' },
-                { Icon: IconInvestment, title: 'Smart Investment', desc: 'Track deals, manage portfolios, and follow startups from first pitch to scale.' },
-                { Icon: IconValidation, title: 'Startup Validation', desc: 'Admin-verified startups so you invest in ideas that have passed our quality bar.' },
-                { Icon: IconImpact, title: 'Impact Investing', desc: 'Align capital with impact. Support founders who are building inclusive businesses.' },
+                { Icon: IconDiscovery, title: 'Business Discovery', desc: 'Browse vetted women-led businesses in one place. Filter by sector, stage, and impact.' },
+                { Icon: IconInvestment, title: 'Grant or Investment', desc: 'Experts judge each application. You receive either a grant opportunity or an investment opportunity—one only.' },
+                { Icon: IconValidation, title: 'Expert Validation', desc: 'Expert-verified businesses. Those selected for investment are shared with investors to choose and fund.' },
+                { Icon: IconImpact, title: 'Impact', desc: 'Align capital with impact. Support founders who are building inclusive businesses.' },
               ].map(({ Icon, title, desc }) => (
                 <div
                   key={title}
@@ -160,9 +158,9 @@ function LandingPage() {
             <p className="text-center text-text-muted mb-14 max-w-xl mx-auto">From idea to funding in three clear steps.</p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
               {[
-                { step: '1', Icon: IconMobile, title: 'Startups submit ideas', desc: 'Founders submit their ventures through our mobile app. We collect pitch, traction, and team info.' },
-                { step: '2', Icon: IconShield, title: 'Admin validates startups', desc: 'Our team reviews and validates each startup. Only verified companies appear for investors.' },
-                { step: '3', Icon: IconRocket, title: 'Investors discover & fund', desc: 'Investors browse validated startups, connect with founders, and fund the ones they believe in.' },
+                { step: '1', Icon: IconMobile, title: 'You register and fill your details', desc: 'Register as a user, fill your business profile. We collect your business name, description, and key info.' },
+                { step: '2', Icon: IconShield, title: 'Experts judge your application', desc: 'Experts review each application. You are then placed for either a grant opportunity or an investment opportunity—one only.' },
+                { step: '3', Icon: IconRocket, title: 'Investors see businesses & invest', desc: 'Businesses selected for investment are sent to investors. Investors browse, choose, and invest in the ones they believe in.' },
               ].map(({ step, Icon, title, desc }) => (
                 <div key={step} className="relative text-center">
                   <div className="inline-flex w-14 h-14 rounded-xl bg-primary text-white font-bold text-lg items-center justify-center mb-5 shadow-sm">
@@ -187,7 +185,7 @@ function LandingPage() {
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl md:text-4xl font-bold text-text mb-6">Why Support Women Founders?</h2>
               <p className="text-lg text-text-muted leading-relaxed mb-4">
-                Women-led startups are underfunded despite strong performance. Diverse teams drive innovation and better outcomes for customers and communities.
+                Women-led businesses are underfunded despite strong performance. Diverse teams drive innovation and better outcomes for customers and communities.
               </p>
               <p className="text-lg text-text-muted leading-relaxed">
                 By backing women founders, you're not only investing in individual companies—you're helping reshape who gets to build the future. Our platform makes it easy to find and fund these ventures with confidence.
@@ -217,19 +215,19 @@ function LandingPage() {
         <section className="py-16 md:py-24 bg-primary">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to get started?</h2>
-            <p className="text-white/90 text-lg mb-10">Explore women-led startups or join as an investor and back the next generation of founders.</p>
+            <p className="text-white/90 text-lg mb-10">Explore women-led businesses or join as an investor and back the next generation of founders.</p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
-                to="/investor"
+                to="/auth"
                 className="px-6 py-3.5 rounded-xl font-semibold bg-white text-primary hover:bg-brand transition-colors"
               >
-                Explore Startups
+                Sign Up
               </Link>
               <Link
                 to="/investor"
                 className="px-6 py-3.5 rounded-xl font-semibold border-2 border-white/80 text-white hover:bg-white/10 transition-colors"
               >
-                Become an Investor
+                Browse Businesses (Investors)
               </Link>
             </div>
           </div>
@@ -241,7 +239,7 @@ function LandingPage() {
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
             <div>
               <Link to="/" className="inline-flex items-center gap-2 mb-4">
-                <img src={LOGO_URL} alt="MELIKA" className="h-9 w-auto object-contain" />
+                <img src={LOGO_URL} alt="MELIKA" className="h-16 w-auto object-contain" />
                 <span className="font-bold text-text">MELIKA</span>
               </Link>
               <nav className="flex flex-wrap gap-6">

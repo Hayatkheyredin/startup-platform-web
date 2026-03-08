@@ -1,5 +1,5 @@
 /**
- * InvestmentManagement - Track startups investor is interested in or has invested in.
+ * InvestmentManagement - Track businesses investor is interested in or has invested in.
  */
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -91,14 +91,14 @@ function InvestmentManagement() {
             interested.length === 0 ? (
               <EmptyState
                 icon={HeartIcon}
-                title="No startups in your list yet"
-                description="Save startups you're interested in to track them here and get updates."
+                title="No businesses in your list yet"
+                description="Save businesses you're interested in to track them here and get updates."
                 action={
                   <Link
-                    to="/investor/startups"
+                    to="/investor/businesses"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-primary text-white hover:bg-primary-hover transition-all duration-200 hover:scale-105 active:scale-95"
                   >
-                    Browse Startups →
+                    Browse Businesses →
                   </Link>
                 }
               />
@@ -116,13 +116,13 @@ function InvestmentManagement() {
               <EmptyState
                 icon={WalletIcon}
                 title="No investments yet"
-                description="When you invest in startups, they'll appear here with amount and date."
+                description="When you invest in businesses, they'll appear here with amount and date."
                 action={
                   <Link
-                    to="/investor/startups"
+                    to="/investor/businesses"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium bg-primary text-white hover:bg-primary-hover transition-all duration-200 hover:scale-105 active:scale-95"
                   >
-                    Explore Startups →
+                    Explore Businesses →
                   </Link>
                 }
               />
@@ -132,7 +132,7 @@ function InvestmentManagement() {
                 <table className="w-full text-sm">
                   <thead className="bg-primary text-white">
                     <tr>
-                      <th className="text-left px-4 py-3 font-medium">Startup</th>
+                      <th className="text-left px-4 py-3 font-medium">Business</th>
                       <th className="text-left px-4 py-3 font-medium">Industry</th>
                       <th className="text-left px-4 py-3 font-medium">Amount</th>
                       <th className="text-left px-4 py-3 font-medium">Date</th>
@@ -148,7 +148,7 @@ function InvestmentManagement() {
                         <td className="px-4 py-3 text-text-muted">{s.date || 'N/A'}</td>
                         <td className="px-4 py-3">
                           <Link
-                            to={`/investor/startups/${s.id}`}
+                            to={`/investor/businesses/${s.id}`}
                             className="text-primary font-medium hover:underline"
                           >
                             View

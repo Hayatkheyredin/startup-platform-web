@@ -1,5 +1,5 @@
 /**
- * StartupMonitoring - Admin page to list startups, verify/reject, and add new startups.
+ * StartupMonitoring - Admin page to list businesses, verify/reject, and add new businesses.
  */
 import React, { useState, useEffect } from 'react'
 import { getStartupsForAdmin } from '../../services/api'
@@ -86,8 +86,8 @@ function StartupMonitoring() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-semibold text-text">Startup Monitoring</h1>
-          <p className="text-text-muted text-sm mt-0.5">Track, verify, and add startups</p>
+          <h1 className="text-2xl font-semibold text-text">Business Monitoring</h1>
+          <p className="text-text-muted text-sm mt-0.5">Track, verify, and add businesses. Experts judge; businesses selected for investment go to investors.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <select
@@ -105,7 +105,7 @@ function StartupMonitoring() {
             onClick={() => setShowAddModal(true)}
             className="px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white hover:bg-primary-hover transition-colors"
           >
-            + Add Startup
+            + Add Business
           </button>
         </div>
       </div>
@@ -165,7 +165,7 @@ function StartupMonitoring() {
       <Modal
         show={showAddModal}
         onHide={() => setShowAddModal(false)}
-        title="Add Startup"
+        title="Add Business"
         footer={
           <>
             <button
@@ -187,7 +187,7 @@ function StartupMonitoring() {
       >
         <form id="add-startup-form" onSubmit={handleAddStartup} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-text mb-1">Startup name</label>
+            <label className="block text-sm font-medium text-text mb-1">Business name</label>
             <input
               type="text"
               value={newStartup.name}
@@ -228,7 +228,7 @@ function StartupMonitoring() {
               type="email"
               value={newStartup.founderEmail}
               onChange={(e) => setNewStartup({ ...newStartup, founderEmail: e.target.value })}
-              placeholder="founder@startup.com"
+              placeholder="founder@business.com"
               className="w-full px-3 py-2 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary"
             />
           </div>

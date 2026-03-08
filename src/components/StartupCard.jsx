@@ -1,5 +1,5 @@
 /**
- * StartupCard - Card for startup summaries with placeholder images and polished styling.
+ * StartupCard - Card for business summaries with placeholder images and polished styling.
  */
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -25,11 +25,11 @@ function getImageUrl(imageUrl, id, industry) {
 function StartupCard({ startup, showInvestButton = true, linkPrefix = '/investor' }) {
   const {
     id,
-    name = 'Startup Name',
+    name = 'Business Name',
     industry = 'Technology',
     stage = 'Early Stage',
     fundingNeeded = 'N/A',
-    shortDescription = 'Brief description of the startup idea and value proposition.',
+    shortDescription = 'Brief description of the business and value proposition.',
     imageUrl,
     status,
     fundingProgress,
@@ -100,7 +100,7 @@ function StartupCard({ startup, showInvestButton = true, linkPrefix = '/investor
         </div>
         {showInvestButton && (
           <Link
-            to={`${linkPrefix}/startups/${id}`}
+            to={`${linkPrefix}/businesses/${id}`}
             className="mt-auto block w-full py-2.5 px-4 rounded-xl text-center text-sm font-semibold bg-primary text-white hover:bg-primary-hover transition-all duration-200 shadow-card hover:shadow-glow hover:scale-[1.02] active:scale-[0.98]"
           >
             View Details →

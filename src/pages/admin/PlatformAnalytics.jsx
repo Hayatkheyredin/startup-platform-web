@@ -1,5 +1,5 @@
 /**
- * PlatformAnalytics - Basic stats: users, startups, investments.
+ * PlatformAnalytics - Basic stats: users, businesses, investments.
  */
 import React, { useState, useEffect } from 'react'
 import { getPlatformAnalytics } from '../../services/api'
@@ -24,7 +24,7 @@ function PlatformAnalytics() {
 
   const mockAnalytics = {
     totalUsers: 156,
-    totalStartups: 42,
+    totalBusinesses: 42,
     totalInvestments: 28,
     totalFundingRaised: '$1.2M',
   }
@@ -33,7 +33,7 @@ function PlatformAnalytics() {
 
   const statCards = [
     { label: 'Total Users', value: stats.totalUsers, icon: UsersIcon, bg: 'bg-primary' },
-    { label: 'Total Startups', value: stats.totalStartups, icon: RocketIcon, bg: 'bg-secondary' },
+    { label: 'Total Businesses', value: stats.totalBusinesses ?? stats.totalStartups ?? 0, icon: RocketIcon, bg: 'bg-secondary' },
     { label: 'Total Investments', value: stats.totalInvestments, icon: ChartIcon, bg: 'bg-accent' },
     { label: 'Funding Raised', value: stats.totalFundingRaised, icon: MoneyIcon, bg: 'bg-primary' },
   ]

@@ -56,7 +56,7 @@ function AdminLoginPage() {
             ← Back to home
           </Link>
           <div className="flex items-center gap-3 mb-8">
-            <img src="/melika-logo.png" alt="MELIKA" className="h-12 w-auto object-contain" />
+            <img src="/melika-logo.png" alt="MELIKA" className="h-16 w-auto object-contain" />
             <div>
               <h1 className="text-xl font-semibold text-white">MELIKA Admin</h1>
               <p className="text-sm text-white/80">
@@ -152,7 +152,7 @@ function AdminLoginPage() {
             👤
           </div>
           <h2 className="text-xl font-semibold text-text mb-2">Admin Dashboard</h2>
-          <p className="text-text-muted text-sm">Manage users, verify startups, and view analytics.</p>
+          <p className="text-text-muted text-sm">Manage users, verify businesses, and view analytics.</p>
         </div>
       </div>
     </div>

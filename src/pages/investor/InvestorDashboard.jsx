@@ -1,5 +1,5 @@
 /**
- * InvestorDashboard - Data-rich overview with stats, charts, trending startups, and activity.
+ * InvestorDashboard - Overview with stats, charts, and businesses selected for investment.
  */
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -21,7 +21,7 @@ import StartupCard from '../../components/StartupCard'
 import { getStartups } from '../../services/api'
 
 const STATS = [
-  { label: 'Total Startups', value: '42', sub: 'Validated', color: 'bg-primary' },
+  { label: 'Total Businesses', value: '42', sub: 'For investment', color: 'bg-primary' },
   { label: 'Active Investors', value: '128', sub: 'This month', color: 'bg-primary' },
   { label: 'Total Funding Raised', value: '$1.2M', sub: 'All time', color: 'bg-primary' },
   { label: 'Investments Made', value: '86', sub: 'Deals closed', color: 'bg-primary' },
@@ -43,11 +43,11 @@ const FUNDING_GROWTH_DATA = [
 ]
 
 const INDUSTRY_DISTRIBUTION = [
-  { name: 'Technology', value: 38, color: '#ff5bae' },
-  { name: 'Healthcare', value: 24, color: '#ff7bc4' },
-  { name: 'Sustainability', value: 18, color: '#ff9bd4' },
-  { name: 'Education', value: 12, color: '#ffbbe4' },
-  { name: 'Other', value: 8, color: '#ffd6ef' },
+  { name: 'Technology', value: 38, color: '#E85B84' },
+  { name: 'Healthcare', value: 24, color: '#6C3D5A' },
+  { name: 'Sustainability', value: 18, color: '#d94a73' },
+  { name: 'Education', value: 12, color: '#b8486e' },
+  { name: 'Other', value: 8, color: '#fad6e8' },
 ]
 
 const MONTHLY_INVESTMENTS = [
@@ -63,7 +63,7 @@ const RECENT_ACTIVITY = [
   { text: 'HealthBridge received $25K investment', time: '5 hours ago' },
   { text: 'EduLearn completed validation', time: 'Yesterday' },
   { text: 'TechFlow Solutions raised $50K', time: 'Yesterday' },
-  { text: 'New startup FitWell applied', time: '2 days ago' },
+  { text: 'New business FitWell applied', time: '2 days ago' },
 ]
 
 function InvestorDashboard() {
@@ -101,7 +101,7 @@ function InvestorDashboard() {
           <div>
             <h1 className="text-2xl md:text-3xl font-bold mb-1">Welcome back</h1>
             <p className="text-white/90 text-sm md:text-base">
-              Discover and support validated women-led startups
+              Browse businesses selected for investment and invest in the ones you believe in
             </p>
           </div>
           <button className="bg-gradient-to-r from-brand-dark to-secondary text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-200" onClick={() => navigate('/investor/premium')}>
@@ -142,7 +142,7 @@ function InvestorDashboard() {
                   contentStyle={{ borderRadius: 8, border: '1px solid #e2e8f0' }}
                   formatter={(value) => [`$${value}K`, 'Amount']}
                 />
-                <Line type="monotone" dataKey="amount" stroke="#ff5bae" strokeWidth={2} dot={{ fill: '#ff5bae' }} />
+                <Line type="monotone" dataKey="amount" stroke="#E85B84" strokeWidth={2} dot={{ fill: '#E85B84' }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -184,7 +184,7 @@ function InvestorDashboard() {
                 <XAxis dataKey="month" tick={{ fontSize: 12 }} stroke="#94a3b8" />
                 <YAxis tick={{ fontSize: 12 }} stroke="#94a3b8" />
                 <Tooltip contentStyle={{ borderRadius: 8, border: '1px solid #e2e8f0' }} />
-                <Bar dataKey="count" fill="#ff5bae" radius={[4, 4, 0, 0]} name="Deals" />
+                <Bar dataKey="count" fill="#E85B84" radius={[4, 4, 0, 0]} name="Deals" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -205,11 +205,11 @@ function InvestorDashboard() {
         </div>
       </div>
 
-      {/* Trending Startups */}
+      {/* Trending Businesses */}
       <div>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-xl font-semibold text-text">Trending Startups</h2>
+            <h2 className="text-xl font-semibold text-text">Trending Businesses</h2>
             <p className="text-text-muted text-sm mt-0.5">Most viewed this week</p>
           </div>
         </div>
@@ -224,19 +224,19 @@ function InvestorDashboard() {
         </div>
       </div>
 
-      {/* Validated Startups grid */}
+      {/* Businesses selected for investment */}
       <div>
         <div className="flex items-center justify-between gap-4 mb-4">
           <div>
-            <h2 className="text-xl font-semibold text-text">Validated Startups</h2>
-            <p className="text-text-muted text-sm mt-0.5">Overview of startups ready for investment</p>
+            <h2 className="text-xl font-semibold text-text">Businesses for Investment</h2>
+            <p className="text-text-muted text-sm mt-0.5">Businesses selected by experts—browse and invest</p>
           </div>
         </div>
 
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20">
             <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            <p className="mt-4 text-sm text-text-muted">Loading startups...</p>
+            <p className="mt-4 text-sm text-text-muted">Loading businesses...</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

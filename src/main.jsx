@@ -1,5 +1,5 @@
 /**
- * Main entry point for the Women Startup Platform web app.
+ * Main entry point for the MELIKA (women-led business platform) web app.
  * Uses dynamic import to catch load errors and display them.
  */
 import React from 'react'

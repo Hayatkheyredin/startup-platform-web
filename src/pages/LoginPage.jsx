@@ -54,7 +54,7 @@ function LoginPage() {
       <div className="flex-1 flex items-center justify-center p-6 md:p-10 bg-gradient-to-br from-primary via-primary to-primary-hover">
         <div className="w-full max-w-md">
           <div className="flex items-center gap-3 mb-8">
-            <img src="/melika-logo.png" alt="MELIKA" className="h-12 w-auto object-contain" />
+            <img src="/melika-logo.png" alt="MELIKA" className="h-16 w-auto object-contain" />
             <div>
               <h1 className="text-xl font-semibold text-white">MELIKA</h1>
               <p className="text-sm text-white/80">Sign in to your account</p>
@@ -161,7 +161,7 @@ function LoginPage() {
             </svg>
           </div>
           <h2 className="text-xl font-semibold text-text mb-2">Empowering Women Founders</h2>
-          <p className="text-text-muted text-sm">Connect with validated startups and make an impact.</p>
+          <p className="text-text-muted text-sm">Connect with validated businesses and make an impact.</p>
         </div>
       </div>
     </div>
